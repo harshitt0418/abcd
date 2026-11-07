@@ -66,7 +66,7 @@ export default function LuxuryCursor() {
         />
       </motion.div>
 
-      {/* Tiny Precision Needle Dot */}
+      {/* Precision Black Circle Follower */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-50"
         style={{
@@ -78,12 +78,12 @@ export default function LuxuryCursor() {
       >
         <motion.div
           animate={{
-            scale: isPointer ? 2.2 : 1,
+            scale: isPointer ? 1.5 : 1,
             borderColor: isPointer ? '#C5A059' : '#090D0C',
-            backgroundColor: isPointer ? 'rgba(197, 160, 89, 0.2)' : 'rgba(9, 13, 12, 0.8)',
+            backgroundColor: isPointer ? 'rgba(197, 160, 89, 0.15)' : 'transparent',
           }}
           transition={{ duration: 0.15 }}
-          className="w-3 h-3 rounded-full border border-gold-500/80 shadow-xs"
+          className="w-7 h-7 rounded-full border-[1.5px] border-obsidian-950 shadow-[0_0_0_1px_rgba(197,160,89,0.25)]"
         />
       </motion.div>
     </>
