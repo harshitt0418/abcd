@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Send, CheckCircle2, AlertCircle, Trash2, Info, Building, ShieldCheck, Mail, MapPin } from 'lucide-react';
+import { Send, CheckCircle2, AlertCircle, Trash2, Info, Building, ShieldCheck, Mail, MapPin, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import confetti from 'canvas-confetti';
 import { COMPANY_INFO } from '../data/company';
 
 export default function EnquirySection({ selectedItems, onRemoveItem, onClearSelected }) {
@@ -75,6 +77,18 @@ export default function EnquirySection({ selectedItems, onRemoveItem, onClearSel
             day: 'numeric',
           }),
         });
+
+        // Trigger celebratory green/teal confetti burst
+        try {
+          confetti({
+            particleCount: 80,
+            spread: 70,
+            origin: { y: 0.65 },
+            colors: ['#09332f', '#146059', '#15803d', '#22c55e', '#38b2a6']
+          });
+        } catch (err) {
+          // Fallback gracefully if canvas context restricted
+        }
       }, 700);
     }
   };
@@ -96,11 +110,17 @@ export default function EnquirySection({ selectedItems, onRemoveItem, onClearSel
   };
 
   return (
-    <section id="enquiry" className="py-20 md:py-28 bg-[#fcfdfd] border-b border-slate-200/80">
+    <section id="enquiry" className="py-20 md:py-28 bg-[#fcfdfd] border-b border-slate-200/80 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
         
         {/* Header */}
-        <div className="max-w-3xl mb-14">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.5 }}
+          className="max-w-3xl mb-14"
+        >
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-sac-800 mb-3">
             <span className="w-1.5 h-1.5 rounded-full bg-sac-700"></span>
             <span>Institutional Procurement Desk</span>
@@ -111,7 +131,7 @@ export default function EnquirySection({ selectedItems, onRemoveItem, onClearSel
           <p className="mt-3 text-base text-slate-600 leading-relaxed font-normal">
             Direct channel for Indian Railways, Municipal Corporations, Public Health departments, and institutional buyers seeking GeM compliance, batch testing, or bulk manufacturing estimates.
           </p>
-        </div>
+        </motion.div>
 
         {/* Demo Disclaimer Banner */}
         <div className="mb-10 p-4 rounded-xl bg-amber-50/80 border border-amber-200 text-amber-900 flex items-start gap-3 text-xs leading-relaxed">
@@ -126,250 +146,275 @@ export default function EnquirySection({ selectedItems, onRemoveItem, onClearSel
           
           {/* Left Form (8 Cols) */}
           <div className="lg:col-span-8 bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-6 sm:p-8">
-            {submittedData ? (
-              /* Success State */
-              <div className="space-y-6 text-center py-6 animate-fade-in">
-                <div className="w-16 h-16 rounded-full bg-sac-100 text-sac-800 mx-auto flex items-center justify-center">
-                  <CheckCircle2 className="w-9 h-9 text-sac-700" />
-                </div>
-                
-                <div>
-                  <span className="inline-block px-3 py-1 rounded-full bg-sac-50 border border-sac-200 text-sac-800 text-xs font-mono font-bold uppercase tracking-wider mb-2">
-                    Reference ID: {submittedData.refId}
-                  </span>
-                  <h3 className="font-display font-bold text-2xl text-slate-900">
-                    Quotation Request Prepared (Demo)
-                  </h3>
-                  <p className="mt-2 text-sm text-slate-600 max-w-lg mx-auto font-normal">
-                    Your institutional quotation request for <strong>{submittedData.organizationType}</strong> ({submittedData.department}) has been generated with official brochure specifications.
-                  </p>
-                </div>
+            <AnimatePresence mode="wait">
+              {submittedData ? (
+                /* Success State with Motion entrance */
+                <motion.div
+                  key="success-card"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.4 }}
+                  className="space-y-6 text-center py-6"
+                >
+                  <motion.div
+                    initial={{ scale: 0.5, rotate: -20 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                    className="w-16 h-16 rounded-full bg-sac-100 text-sac-800 mx-auto flex items-center justify-center shadow-xs"
+                  >
+                    <CheckCircle2 className="w-9 h-9 text-sac-700" />
+                  </motion.div>
+                  
+                  <div>
+                    <span className="inline-block px-3 py-1 rounded-full bg-sac-50 border border-sac-200 text-sac-800 text-xs font-mono font-bold uppercase tracking-wider mb-2">
+                      Reference ID: {submittedData.refId}
+                    </span>
+                    <h3 className="font-display font-bold text-2xl text-slate-900">
+                      Quotation Request Prepared (Demo)
+                    </h3>
+                    <p className="mt-2 text-sm text-slate-600 max-w-lg mx-auto font-normal">
+                      Your institutional quotation request for <strong>{submittedData.organizationType}</strong> ({submittedData.department}) has been generated with official brochure specifications.
+                    </p>
+                  </div>
 
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-left text-xs space-y-2 max-w-md mx-auto">
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">Contact Officer:</span>
-                    <span className="font-semibold text-slate-900">{submittedData.officerName}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">Email:</span>
-                    <span className="font-semibold text-slate-900">{submittedData.officialEmail}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">Delivery Hub:</span>
-                    <span className="font-semibold text-slate-900">{submittedData.deliveryLocation}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">Volume Tier:</span>
-                    <span className="font-semibold text-slate-900">{submittedData.quantityTier}</span>
-                  </div>
-                  {submittedData.queuedItems.length > 0 && (
-                    <div className="pt-2 border-t border-slate-200">
-                      <span className="text-slate-500 block mb-1">Attached Items ({submittedData.queuedItems.length}):</span>
-                      <ul className="list-disc list-inside space-y-0.5 text-slate-800 font-medium">
-                        {submittedData.queuedItems.map((item) => (
-                          <li key={item.id}>{item.name} ({item.highlight})</li>
-                        ))}
-                      </ul>
+                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-left text-xs space-y-2 max-w-md mx-auto">
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Contact Officer:</span>
+                      <span className="font-semibold text-slate-900">{submittedData.officerName}</span>
                     </div>
-                  )}
-                </div>
-
-                <div className="pt-2">
-                  <button
-                    type="button"
-                    onClick={handleReset}
-                    className="inline-flex items-center justify-center px-6 py-2.5 rounded-xl bg-sac-800 text-white text-xs sm:text-sm font-semibold hover:bg-sac-900 transition-colors shadow-xs"
-                  >
-                    Submit Another Demo Enquiry
-                  </button>
-                </div>
-              </div>
-            ) : (
-              /* Active Form */
-              <form onSubmit={handleSubmit} noValidate className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {/* Officer Name */}
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                      Contact Officer / Indenting Name <span className="text-rose-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      name="officerName"
-                      value={formData.officerName}
-                      onChange={handleChange}
-                      onBlur={() => handleBlur('officerName')}
-                      placeholder="e.g. Er. R. K. Sharma"
-                      className={`w-full px-3.5 py-2.5 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 ${
-                        touched.officerName && errors.officerName
-                          ? 'border-rose-300 bg-rose-50/30 focus:ring-rose-400'
-                          : 'border-slate-300 bg-white focus:ring-sac-600 focus:border-transparent'
-                      }`}
-                    />
-                    {touched.officerName && errors.officerName && (
-                      <p className="mt-1 text-xs text-rose-500 flex items-center gap-1">
-                        <AlertCircle className="w-3 h-3" />
-                        <span>{errors.officerName}</span>
-                      </p>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Email:</span>
+                      <span className="font-semibold text-slate-900">{submittedData.officialEmail}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Delivery Hub:</span>
+                      <span className="font-semibold text-slate-900">{submittedData.deliveryLocation}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Volume Tier:</span>
+                      <span className="font-semibold text-slate-900">{submittedData.quantityTier}</span>
+                    </div>
+                    {submittedData.queuedItems.length > 0 && (
+                      <div className="pt-2 border-t border-slate-200">
+                        <span className="text-slate-500 block mb-1">Attached Items ({submittedData.queuedItems.length}):</span>
+                        <ul className="list-disc list-inside space-y-0.5 text-slate-800 font-medium">
+                          {submittedData.queuedItems.map((item) => (
+                            <li key={item.id}>{item.name} ({item.highlight})</li>
+                          ))}
+                        </ul>
+                      </div>
                     )}
                   </div>
 
-                  {/* Department */}
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                      Department / Municipal Division <span className="text-rose-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      name="department"
-                      value={formData.department}
-                      onChange={handleChange}
-                      onBlur={() => handleBlur('department')}
-                      placeholder="e.g. Mechanical Carriage / Sanitation Dept"
-                      className={`w-full px-3.5 py-2.5 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 ${
-                        touched.department && errors.department
-                          ? 'border-rose-300 bg-rose-50/30 focus:ring-rose-400'
-                          : 'border-slate-300 bg-white focus:ring-sac-600 focus:border-transparent'
-                      }`}
-                    />
-                    {touched.department && errors.department && (
-                      <p className="mt-1 text-xs text-rose-500 flex items-center gap-1">
-                        <AlertCircle className="w-3 h-3" />
-                        <span>{errors.department}</span>
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {/* Organization Type */}
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                      Client / Organization Sector
-                    </label>
-                    <select
-                      name="organizationType"
-                      value={formData.organizationType}
-                      onChange={handleChange}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sac-600"
+                  <div className="pt-2">
+                    <motion.button
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      type="button"
+                      onClick={handleReset}
+                      className="inline-flex items-center justify-center px-6 py-2.5 rounded-xl bg-sac-800 text-white text-xs sm:text-sm font-semibold hover:bg-sac-900 transition-colors shadow-xs"
                     >
-                      <option value="Indian Railways">Indian Railways (Zonal / Workshop)</option>
-                      <option value="Municipal Corporation">Municipal Corporation / Nagar Palika</option>
-                      <option value="State Government Department">State Government Department</option>
-                      <option value="Central Public Sector / ONGC">Central Public Sector / ONGC</option>
-                      <option value="Defense / Army / Navy">Defense (Army / Navy Establishments)</option>
-                      <option value="Public Health / Vector Control">Public Health & Vector Control</option>
-                      <option value="Private Contractor / GeM Reseller">Authorized Tender Contractor</option>
-                    </select>
+                      Submit Another Demo Enquiry
+                    </motion.button>
+                  </div>
+                </motion.div>
+              ) : (
+                /* Active Form */
+                <motion.form
+                  key="enquiry-form"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onSubmit={handleSubmit}
+                  noValidate
+                  className="space-y-6"
+                >
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    {/* Officer Name */}
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                        Contact Officer / Indenting Name <span className="text-rose-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="officerName"
+                        value={formData.officerName}
+                        onChange={handleChange}
+                        onBlur={() => handleBlur('officerName')}
+                        placeholder="e.g. Er. R. K. Sharma"
+                        className={`w-full px-3.5 py-2.5 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 ${
+                          touched.officerName && errors.officerName
+                            ? 'border-rose-300 bg-rose-50/30 focus:ring-rose-400'
+                            : 'border-slate-300 bg-white focus:ring-sac-600 focus:border-transparent'
+                        }`}
+                      />
+                      {touched.officerName && errors.officerName && (
+                        <p className="mt-1 text-xs text-rose-500 flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          <span>{errors.officerName}</span>
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Department */}
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                        Department / Municipal Division <span className="text-rose-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="department"
+                        value={formData.department}
+                        onChange={handleChange}
+                        onBlur={() => handleBlur('department')}
+                        placeholder="e.g. Mechanical Carriage / Sanitation Dept"
+                        className={`w-full px-3.5 py-2.5 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 ${
+                          touched.department && errors.department
+                            ? 'border-rose-300 bg-rose-50/30 focus:ring-rose-400'
+                            : 'border-slate-300 bg-white focus:ring-sac-600 focus:border-transparent'
+                        }`}
+                      />
+                      {touched.department && errors.department && (
+                        <p className="mt-1 text-xs text-rose-500 flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          <span>{errors.department}</span>
+                        </p>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Official Email */}
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                      Official / Gov Email Address <span className="text-rose-500">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      name="officialEmail"
-                      value={formData.officialEmail}
-                      onChange={handleChange}
-                      onBlur={() => handleBlur('officialEmail')}
-                      placeholder="officer@railnet.gov.in or similar"
-                      className={`w-full px-3.5 py-2.5 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 ${
-                        touched.officialEmail && errors.officialEmail
-                          ? 'border-rose-300 bg-rose-50/30 focus:ring-rose-400'
-                          : 'border-slate-300 bg-white focus:ring-sac-600 focus:border-transparent'
-                      }`}
-                    />
-                    {touched.officialEmail && errors.officialEmail && (
-                      <p className="mt-1 text-xs text-rose-500 flex items-center gap-1">
-                        <AlertCircle className="w-3 h-3" />
-                        <span>{errors.officialEmail}</span>
-                      </p>
-                    )}
-                  </div>
-                </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    {/* Organization Type */}
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                        Client / Organization Sector
+                      </label>
+                      <select
+                        name="organizationType"
+                        value={formData.organizationType}
+                        onChange={handleChange}
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sac-600"
+                      >
+                        <option value="Indian Railways">Indian Railways (Zonal / Workshop)</option>
+                        <option value="Municipal Corporation">Municipal Corporation / Nagar Palika</option>
+                        <option value="State Government Department">State Government Department</option>
+                        <option value="Central Public Sector / ONGC">Central Public Sector / ONGC</option>
+                        <option value="Defense / Army / Navy">Defense (Army / Navy Establishments)</option>
+                        <option value="Public Health / Vector Control">Public Health & Vector Control</option>
+                        <option value="Private Contractor / GeM Reseller">Authorized Tender Contractor</option>
+                      </select>
+                    </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {/* Tender / Procurement Ref */}
+                    {/* Official Email */}
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                        Official / Gov Email Address <span className="text-rose-500">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        name="officialEmail"
+                        value={formData.officialEmail}
+                        onChange={handleChange}
+                        onBlur={() => handleBlur('officialEmail')}
+                        placeholder="officer@railnet.gov.in or similar"
+                        className={`w-full px-3.5 py-2.5 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 ${
+                          touched.officialEmail && errors.officialEmail
+                            ? 'border-rose-300 bg-rose-50/30 focus:ring-rose-400'
+                            : 'border-slate-300 bg-white focus:ring-sac-600 focus:border-transparent'
+                        }`}
+                      />
+                      {touched.officialEmail && errors.officialEmail && (
+                        <p className="mt-1 text-xs text-rose-500 flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          <span>{errors.officialEmail}</span>
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    {/* Tender / Procurement Ref */}
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                        Tender Reference / GeM Bid No. (Optional)
+                      </label>
+                      <input
+                        type="text"
+                        name="procurementRef"
+                        value={formData.procurementRef}
+                        onChange={handleChange}
+                        placeholder="e.g. GEM/2026/B/872412"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sac-600"
+                      />
+                    </div>
+
+                    {/* Volume Tier */}
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                        Estimated Supply Volume
+                      </label>
+                      <select
+                        name="quantityTier"
+                        value={formData.quantityTier}
+                        onChange={handleChange}
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sac-600"
+                      >
+                        <option value="Bulk Tender (> 500 units / Multi-ton)">Bulk Tender (&gt; 500 units / Multi-ton)</option>
+                        <option value="Medium Institutional (100 - 500 units)">Medium Institutional (100 - 500 units)</option>
+                        <option value="Trial / Pilot Depot Batch (25 - 100 units)">Trial / Pilot Depot Batch (25 - 100 units)</option>
+                        <option value="Annual Rate Contract Requirement">Annual Rate Contract Requirement</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Additional Scope Notes */}
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                      Tender Reference / GeM Bid No. (Optional)
+                      Technical Specifications & Special Requirements
                     </label>
-                    <input
-                      type="text"
-                      name="procurementRef"
-                      value={formData.procurementRef}
+                    <textarea
+                      rows="3"
+                      name="productScopeNotes"
+                      value={formData.productScopeNotes}
                       onChange={handleChange}
-                      placeholder="e.g. GEM/2026/B/872412"
+                      placeholder="Specify custom RDSO drawing numbers, SS gauge, color requirements, or pesticide active percentages required..."
                       className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sac-600"
-                    >
-                    </input>
+                    ></textarea>
                   </div>
 
-                  {/* Volume Tier */}
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                      Estimated Supply Volume
-                    </label>
-                    <select
-                      name="quantityTier"
-                      value={formData.quantityTier}
-                      onChange={handleChange}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sac-600"
+                  {/* Submit CTA with Motion */}
+                  <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl bg-sac-800 text-white font-semibold text-sm hover:bg-sac-900 transition-all shadow-subtle hover:shadow-premium focus:outline-none focus:ring-2 focus:ring-sac-600 focus:ring-offset-2 disabled:opacity-70"
                     >
-                      <option value="Bulk Tender (> 500 units / Multi-ton)">Bulk Tender (&gt; 500 units / Multi-ton)</option>
-                      <option value="Medium Institutional (100 - 500 units)">Medium Institutional (100 - 500 units)</option>
-                      <option value="Trial / Pilot Depot Batch (25 - 100 units)">Trial / Pilot Depot Batch (25 - 100 units)</option>
-                      <option value="Annual Rate Contract Requirement">Annual Rate Contract Requirement</option>
-                    </select>
+                      {isSubmitting ? (
+                        <span>Generating Quotation Mockup...</span>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4" />
+                          <span>Generate Institutional Quotation</span>
+                        </>
+                      )}
+                    </motion.button>
+
+                    <span className="text-[11px] text-slate-400">
+                      No payment or credit card required. Strictly frontend demo.
+                    </span>
                   </div>
-                </div>
-
-                {/* Additional Scope Notes */}
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                    Technical Specifications & Special Requirements
-                  </label>
-                  <textarea
-                    rows="3"
-                    name="productScopeNotes"
-                    value={formData.productScopeNotes}
-                    onChange={handleChange}
-                    placeholder="Specify custom RDSO drawing numbers, SS gauge, color requirements, or pesticide active percentages required..."
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sac-600"
-                  ></textarea>
-                </div>
-
-                {/* Submit CTA */}
-                <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl bg-sac-800 text-white font-semibold text-sm hover:bg-sac-900 transition-all shadow-subtle hover:shadow-premium focus:outline-none focus:ring-2 focus:ring-sac-600 focus:ring-offset-2 disabled:opacity-70"
-                  >
-                    {isSubmitting ? (
-                      <span>Generating Quotation Mockup...</span>
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4" />
-                        <span>Generate Institutional Quotation</span>
-                      </>
-                    )}
-                  </button>
-
-                  <span className="text-[11px] text-slate-400">
-                    No payment or credit card required. Strictly frontend demo.
-                  </span>
-                </div>
-              </form>
-            )}
+                </motion.form>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Right Column: Queued Brochure Items + Institutional Contacts (4 Cols) */}
           <div className="lg:col-span-4 space-y-6">
             
-            {/* Queued Items Card */}
+            {/* Queued Items Card with AnimatePresence */}
             <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2">
@@ -401,32 +446,38 @@ export default function EnquirySection({ selectedItems, onRemoveItem, onClearSel
                 </div>
               ) : (
                 <div className="mt-4 space-y-3 max-h-72 overflow-y-auto pr-1">
-                  {selectedItems.map((item) => (
-                    <div
-                      key={item.id}
-                      className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between gap-2 text-xs"
-                    >
-                      <div className="flex items-center gap-2.5 overflow-hidden">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="w-9 h-9 object-contain bg-white rounded-md border border-slate-200 flex-shrink-0"
-                        />
-                        <div className="overflow-hidden">
-                          <p className="font-semibold text-slate-900 truncate">{item.name}</p>
-                          <p className="text-[10px] text-slate-500 truncate">{item.highlight}</p>
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => onRemoveItem(item.id)}
-                        className="text-slate-400 hover:text-rose-600 p-1 rounded transition-colors flex-shrink-0"
-                        title="Remove from queue"
+                  <AnimatePresence>
+                    {selectedItems.map((item) => (
+                      <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 10 }}
+                        transition={{ duration: 0.2 }}
+                        className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between gap-2 text-xs"
                       >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  ))}
+                        <div className="flex items-center gap-2.5 overflow-hidden">
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="w-9 h-9 object-contain bg-white rounded-md border border-slate-200 flex-shrink-0"
+                          />
+                          <div className="overflow-hidden">
+                            <p className="font-semibold text-slate-900 truncate">{item.name}</p>
+                            <p className="text-[10px] text-slate-500 truncate">{item.highlight}</p>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => onRemoveItem(item.id)}
+                          className="text-slate-400 hover:text-rose-600 p-1 rounded transition-colors flex-shrink-0"
+                          title="Remove from queue"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
                 </div>
               )}
             </div>

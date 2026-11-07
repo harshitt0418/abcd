@@ -1,6 +1,7 @@
 import React from 'react';
 import { COMPANY_INFO } from '../data/company';
 import { MapPin, Mail, ArrowUp, ShieldCheck } from 'lucide-react';
+import { motion } from 'framer-motion';
 import sacLogo from '../assets/sac_logo_circle.png';
 
 export default function Footer() {
@@ -26,7 +27,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-slate-950 text-slate-300 pt-16 pb-12 border-t border-slate-900 text-left">
+    <footer className="bg-slate-950 text-slate-300 pt-16 pb-12 border-t border-slate-900 text-left overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Grid */}
@@ -35,13 +36,16 @@ export default function Footer() {
           {/* Brand & Wordmark (5 Cols) */}
           <div className="lg:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-white p-0.5 flex-shrink-0">
+              <motion.div
+                whileHover={{ rotate: 12, scale: 1.05 }}
+                className="w-10 h-10 rounded-full bg-white p-0.5 flex-shrink-0 cursor-pointer"
+              >
                 <img
                   src={sacLogo}
                   alt="Saurabh Agro Chemicals Logo"
                   className="w-full h-full object-cover rounded-full"
                 />
-              </div>
+              </motion.div>
               <div>
                 <h3 className="font-display font-bold text-lg text-white">
                   {COMPANY_INFO.name}
@@ -134,14 +138,16 @@ export default function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p>© 1984–2026 {COMPANY_INFO.name}. All brochure specifications, product images, and credentials verified.</p>
           
-          <button
+          <motion.button
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.96 }}
             type="button"
             onClick={scrollToTop}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
           >
             <span>Back to top</span>
             <ArrowUp className="w-3.5 h-3.5" />
-          </button>
+          </motion.button>
         </div>
 
       </div>

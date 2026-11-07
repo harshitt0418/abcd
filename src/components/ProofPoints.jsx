@@ -1,5 +1,6 @@
 import React from 'react';
 import { Calendar, Award, MapPin, Factory } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function ProofPoints() {
   const points = [
@@ -30,18 +31,25 @@ export default function ProofPoints() {
   ];
 
   return (
-    <section className="py-12 bg-white border-y border-slate-200/70">
+    <section className="py-12 bg-white border-y border-slate-200/70 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
           {points.map((pt, idx) => {
             const Icon = pt.icon;
             return (
-              <div
+              <motion.div
                 key={pt.label}
-                className={`flex flex-col text-left ${idx > 0 ? 'sm:pl-6 lg:pl-8' : ''} ${idx > 0 ? 'pt-6 sm:pt-0' : ''}`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -3 }}
+                className={`flex flex-col text-left transition-transform ${idx > 0 ? 'sm:pl-6 lg:pl-8' : ''} ${idx > 0 ? 'pt-6 sm:pt-0' : ''}`}
               >
                 <div className="flex items-center gap-2 mb-2 text-sac-700">
-                  <Icon className="w-4 h-4 text-sac-700" />
+                  <div className="p-1 rounded-md bg-sac-50">
+                    <Icon className="w-3.5 h-3.5 text-sac-700" />
+                  </div>
                   <span className="text-xs font-semibold tracking-wider uppercase text-slate-500">
                     {pt.label}
                   </span>
@@ -52,7 +60,7 @@ export default function ProofPoints() {
                 <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                   {pt.detail}
                 </p>
-              </div>
+              </motion.div>
             );
           })}
         </div>
