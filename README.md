@@ -1,8 +1,8 @@
 # Saurabh Agro Chemicals (SAC) — Official Institutional Frontend Mockup
 
-A premium, minimalist frontend website mockup engineered for **Saurabh Agro Chemicals**, an established manufacturer and supplier serving Indian Railways, Central & State Government Departments, Municipal Corporations, and institutional clients since 1984.
+A bespoke, ultra-luxury frontend website mockup engineered for **Saurabh Agro Chemicals**, an established manufacturer and supplier serving Indian Railways, Central & State Government Departments, Municipal Corporations, and institutional clients since 1984.
 
-This project was built from the official company brochure as the primary source of truth, adhering to high-end editorial and industrial design standards inspired by Swiss minimalist design (restrained content, confident typography, generous whitespace, authentic product photography, and clear routes to institutional procurement).
+This project uses the official company brochure as the primary source of truth, styled in an editorial luxury aesthetic inspired by high-end architectural studios (Playfair Display serif headlines, warm ivory and obsidian palette, brushed brass accents, 3D mouse parallax cards, ambient cursor glow, and an interactive slide-over requisition drawer).
 
 ---
 
@@ -83,31 +83,25 @@ The project includes **40 authentic product specifications and cropped photograp
 
 ---
 
-## 🎨 UI/UX & Art Direction
+## 🎨 High-End Luxury Motion & Animation System
 
-* **Typography:** Modern Swiss-inspired pairing featuring Plus Jakarta Sans and Inter for confident legibility and strong hierarchy.
-* **Palette:** Deep industrial teal (`#09332f`, `#0e4a44`) paired with municipal emerald greens (`#15803d`, `#16a34a`), crisp white surfaces, and subtle slate borders.
-* **Whitespace & Layout:** Uncluttered editorial grid, generous padding, and zero distracting gradients or AI tropes.
-* **Product Modal:** Click any card in the catalog to open technical specs, brochure page citations, and 1-click addition to the tender queue.
-* **Interactive RFQ Tender Builder:** Frontend-only quotation request system with real-time field validation, sector selection (Railways, Municipalities, Defense), and simulated reference generation (`SAC-RFQ-XXXXXX`).
+Inspired by elite architectural and luxury digital design (such as *Concrete Management*, *Apple*, and modern luxury showcase websites):
 
----
-
-## ⚠️ Details Flagged for Administrative Confirmation
-
-Per project guidelines, no unverified claims or phone numbers have been fabricated:
-1. **Phone Numbers:** The brochure displays different phone numbers between the front cover (`9451259688`, `9935174699`) and internal/back variations. These are omitted from public display until officially confirmed by the company.
-2. **Backend Integration:** The enquiry form is strictly a frontend demonstration mockup. When connected to a Node.js/Express backend, it can be routed to an email service (Nodemailer/SendGrid) or an institutional CRM.
+* **Magnetic Buttons (`MagneticButton.jsx`):** Primary and secondary call-to-actions subtly pull toward the cursor with spring physics on hover.
+* **Dynamic Spotlight Glare (`ProductCard.jsx`):** Real-time radial champagne light follows mouse coordinates across each product card surface.
+* **3D Perspective Mouse Parallax:** Cards react to three-dimensional tilt (`rotateX`, `rotateY`) as the mouse moves over them.
+* **Animated Chronograph Counters (`AnimatedCounter.jsx`):** Key metrics (`1984`, `40+`, `02 Hubs`) roll smoothly into place upon scrolling into view.
+* **Floating Champagne Gold Dust (`GoldDustParticles.jsx`):** Atmospheric, slowly-drifting golden bokeh particles in dark exhibition containers.
+* **Vertical Nav Progress Dots (`FloatingNavDots.jsx`):** Desktop right-edge navigation tracker highlighting current section with hover tooltips and smooth jump.
+* **Ambient Desktop Cursor Follower (`LuxuryCursor.jsx`):** Precision needle dot and ambient golden light halo tracking desktop interactions.
+* **Cinematic Ken Burns Hero Showcase (`Hero.jsx`):** 5-exhibit architectural presentation with continuous live linear timer progress bar (6s duration).
+* **Slide-over Requisition Dossier Drawer (`DossierDrawer.jsx`):** Concierge slide-out panel allowing institutional buyers to inspect and curate their procurement list.
+* **Dual Confetti Cannons:** Synchronized golden and bronze celebratory blast upon completing the RFQ requisition mockup.
 
 ---
 
 ## 🚀 How to Run the Project Locally
 
-### Prerequisites
-* Node.js (v18 or higher)
-* npm (v9 or higher)
-
-### Installation
 ```bash
 # Clone the repository
 git clone https://github.com/harshitt0418/abcd.git
@@ -118,52 +112,8 @@ npm install
 
 # Start local development server
 npm run dev
-```
-Open `http://localhost:3000` in your web browser.
+# The application will launch at http://localhost:3000
 
-### Production Build
-```bash
-# Build production bundle
+# Build for production
 npm run build
-
-# Preview production build locally
-npm run preview
-```
-
----
-
-## 📁 Project Structure (MERN-Ready)
-
-```
-abcd/
-├── public/
-├── src/
-│   ├── assets/
-│   │   ├── brochure_hero_circle.png   # Cropped cover quadrant visual
-│   │   ├── sac_logo_circle.png        # Transparent official SAC emblem
-│   │   ├── sac_logo_hd.png            # High-res raw badge
-│   │   └── products/                  # 40 authentic cropped brochure images
-│   ├── components/
-│   │   ├── Navbar.jsx                 # Sticky nav, quote counter, smooth scroll
-│   │   ├── Hero.jsx                   # Confident headline, brochure visual
-│   │   ├── ProofPoints.jsx            # 4 factual highlights (1984, 40+ yrs, etc.)
-│   │   ├── ProductCatalog.jsx         # Category filter, search, specs button
-│   │   ├── ProductModal.jsx           # Technical specifications dialog
-│   │   ├── AboutSection.jsx           # MD Sanjay Singh note & sister concerns
-│   │   ├── InstitutionalStrengths.jsx # Tender capabilities & Delhi facility
-│   │   ├── SectorsServed.jsx          # Railways, municipal, defense sectors
-│   │   ├── EnquirySection.jsx         # Interactive RFQ form with validation & demo state
-│   │   └── Footer.jsx                 # Gorakhpur HQ & Delhi factory addresses
-│   ├── data/
-│   │   ├── company.js                 # Brochure verified company information
-│   │   └── products.js                # All 40 products with specs & citations
-│   ├── App.jsx                        # Root React component & state management
-│   ├── index.css                      # Tailwind styling & smooth animations
-│   └── main.jsx                       # Application entry point
-├── index.html                         # Semantic HTML5 entry
-├── package.json                       # Scripts and dependencies
-├── postcss.config.js                  # PostCSS plugins
-├── tailwind.config.js                 # Custom color scheme & typography
-├── vite.config.js                     # Vite build configuration
-└── README.md                          # Documentation
 ```

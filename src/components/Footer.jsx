@@ -3,6 +3,8 @@ import { COMPANY_INFO } from '../data/company';
 import { MapPin, Mail, ArrowUp, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import sacLogo from '../assets/sac_logo_circle.png';
+import MagneticButton from './MagneticButton';
+import GoldDustParticles from './GoldDustParticles';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -27,8 +29,9 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-obsidian-950 text-ivory-300 pt-20 pb-12 border-t border-gold-600/30 text-left overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-obsidian-950 text-ivory-300 pt-20 pb-12 border-t border-gold-600/30 text-left overflow-hidden relative">
+      <GoldDustParticles count={16} />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Top Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-14 border-b border-gold-600/20">
@@ -138,16 +141,13 @@ export default function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ivory-400 font-light">
           <p>© 1984–2026 {COMPANY_INFO.name}. All brochure specifications, product images, and credentials verified.</p>
           
-          <motion.button
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.96 }}
-            type="button"
+          <MagneticButton
             onClick={scrollToTop}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-obsidian-900 border border-gold-600/30 text-gold-400 hover:text-ivory-100 hover:bg-gold-600/20 transition-all text-xs uppercase tracking-wider font-semibold"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-obsidian-900 border border-gold-600/30 text-gold-400 hover:text-ivory-100 hover:bg-gold-600/20 transition-all text-xs uppercase tracking-wider font-semibold cursor-pointer shadow-xs"
           >
             <span>Back to top</span>
             <ArrowUp className="w-3.5 h-3.5" />
-          </motion.button>
+          </MagneticButton>
         </div>
 
       </div>

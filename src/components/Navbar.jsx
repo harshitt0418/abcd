@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, ClipboardList, Shield } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import sacLogo from '../assets/sac_logo_circle.png';
+import MagneticButton from './MagneticButton';
 
 export default function Navbar({ enquiryItemsCount, onOpenEnquiry }) {
   const [scrolled, setScrolled] = useState(false);
@@ -120,16 +121,13 @@ export default function Navbar({ enquiryItemsCount, onOpenEnquiry }) {
               )}
             </AnimatePresence>
 
-            <motion.a
-              whileHover={{ scale: 1.03, y: -1 }}
-              whileTap={{ scale: 0.97 }}
-              href="#enquiry"
+            <MagneticButton
               onClick={(e) => handleNavClick(e, '#enquiry')}
-              className="inline-flex items-center gap-2 rounded-full bg-obsidian-950 px-6 py-2.5 text-xs font-semibold tracking-wider uppercase text-ivory-100 hover:bg-gold-600 hover:text-obsidian-950 transition-all duration-300 shadow-md hover:shadow-gold-glow"
+              className="inline-flex items-center gap-2 rounded-full bg-obsidian-950 px-6 py-2.5 text-xs font-semibold tracking-wider uppercase text-ivory-100 hover:bg-gold-600 hover:text-obsidian-950 transition-all duration-300 shadow-md hover:shadow-gold-glow cursor-pointer"
             >
               <span>Enquire</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
-            </motion.a>
+            </MagneticButton>
           </div>
 
           {/* Mobile Menu Toggle */}

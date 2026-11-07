@@ -1,14 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { CATEGORIES, PRODUCTS } from '../data/products';
-import { Search, Plus, Check, ArrowRight, Layers, SlidersHorizontal, Sparkles } from 'lucide-react';
+import { Search, ArrowRight, Layers, SlidersHorizontal, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProductModal from './ProductModal';
+import ProductCard from './ProductCard';
 
-export default function ProductCatalog({ selectedItems, onToggleSelect, onScrollToEnquiry }) {
+export default function ProductCatalog({ selectedItems, onToggleSelect, onOpenDrawer }) {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [activeModalProduct, setActiveModalProduct] = useState(null);
-  const [lastAddedId, setLastAddedId] = useState(null);
 
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter((item) => {
@@ -31,14 +31,6 @@ export default function ProductCatalog({ selectedItems, onToggleSelect, onScroll
   }, [activeCategory, searchQuery]);
 
   const activeCategoryObj = CATEGORIES.find((c) => c.id === activeCategory);
-
-  const handleItemSelect = (product) => {
-    onToggleSelect(product);
-    setLastAddedId(product.id);
-    setTimeout(() => {
-      setLastAddedId((prev) => (prev === product.id ? null : prev));
-    }, 1500);
-  };
 
   return (
     <section id="products" className="py-24 sm:py-32 bg-ivory-50 border-b border-gold-600/20 relative">
@@ -162,7 +154,7 @@ export default function ProductCatalog({ selectedItems, onToggleSelect, onScroll
 
         </div>
 
-        {/* Product Cards Grid with Framer Motion Layout */}
+        {/* Product Cards Grid with 3D Parallax Tilt Cards */}
         {filteredProducts.length === 0 ? (
           <motion.div
             initial={{ opacity: 0 }}
@@ -186,117 +178,15 @@ export default function ProductCatalog({ selectedItems, onToggleSelect, onScroll
             <AnimatePresence>
               {filteredProducts.map((product) => {
                 const isSelected = selectedItems.some((item) => item.id === product.id);
-                const isJustAdded = lastAddedId === product.id;
 
                 return (
-                  <motion.div
-                    layout
+                  <ProductCard
                     key={product.id}
-                    initial={{ opacity: 0, scale: 0.94 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.94 }}
-                    transition={{ duration: 0.35 }}
-                    whileHover={{ y: -8, scale: 1.01 }}
-                    className="group bg-white rounded-3xl border border-gold-600/20 overflow-hidden shadow-xs hover:shadow-luxe hover:border-gold-600/50 transition-all duration-300 flex flex-col text-left relative"
-                  >
-                    {/* Floating "+1 Added" Toast Animation on Card */}
-                    <AnimatePresence>
-                      {isJustAdded && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, y: -20, scale: 1 }}
-                          exit={{ opacity: 0, y: -35 }}
-                          transition={{ duration: 0.6 }}
-                          className="absolute top-4 right-4 z-30 bg-gold-500 text-obsidian-950 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg flex items-center gap-1"
-                        >
-                          <Sparkles className="w-3 h-3" />
-                          <span>Dossier Updated!</span>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    {/* Image Stage with Mouse Hover Parallax */}
-                    <div
-                      onClick={() => setActiveModalProduct(product)}
-                      className="relative aspect-square bg-[#FAF9F6] p-6 flex items-center justify-center cursor-pointer overflow-hidden border-b border-ivory-200"
-                    >
-                      <motion.img
-                        whileHover={{ scale: 1.12, rotate: 1 }}
-                        transition={{ type: "spring", stiffness: 220, damping: 18 }}
-                        src={product.image}
-                        alt={product.name}
-                        loading="lazy"
-                        className="max-h-full max-w-full object-contain filter drop-shadow-sm"
-                      />
-
-                      {/* Badge */}
-                      <div className="absolute top-3.5 left-3.5 bg-obsidian-950/90 text-[10px] font-bold text-gold-400 px-2.5 py-0.5 rounded-full border border-gold-600/30 shadow-xs">
-                        {product.highlight}
-                      </div>
-
-                      {/* Brochure Ref Tag */}
-                      <div className="absolute bottom-2.5 right-3 text-[10px] font-mono text-ink-400 bg-white/80 px-2 py-0.5 rounded-full border border-ivory-200">
-                        {product.brochureRef}
-                      </div>
-                    </div>
-
-                    {/* Card Content */}
-                    <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
-                      <div>
-                        <div className="text-[10px] font-bold text-gold-700 uppercase tracking-luxe mb-1.5">
-                          {product.material}
-                        </div>
-                        <h3
-                          onClick={() => setActiveModalProduct(product)}
-                          className="font-serif text-lg text-ink-900 group-hover:text-gold-800 cursor-pointer line-clamp-2 transition-colors font-medium leading-snug"
-                        >
-                          {product.name}
-                        </h3>
-                        <p className="mt-2 text-xs text-ink-600 line-clamp-2 leading-relaxed font-light">
-                          {product.features}
-                        </p>
-                      </div>
-
-                      {/* Action Buttons with Spring Feedback */}
-                      <div className="pt-4 border-t border-ivory-200 flex items-center gap-2">
-                        <motion.button
-                          whileTap={{ scale: 0.92 }}
-                          whileHover={{ scale: 1.02 }}
-                          type="button"
-                          onClick={() => handleItemSelect(product)}
-                          className={`flex-1 py-2.5 px-3 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all ${
-                            isSelected
-                              ? 'bg-gold-500/20 text-gold-900 border border-gold-600 hover:bg-gold-500/30'
-                              : 'bg-ivory-200 text-ink-800 hover:bg-obsidian-950 hover:text-ivory-100'
-                          }`}
-                        >
-                          {isSelected ? (
-                            <>
-                              <Check className="w-3.5 h-3.5 text-gold-800" />
-                              <span>Queued</span>
-                            </>
-                          ) : (
-                            <>
-                              <Plus className="w-3.5 h-3.5" />
-                              <span>Add to Dossier</span>
-                            </>
-                          )}
-                        </motion.button>
-
-                        <motion.button
-                          whileTap={{ scale: 0.92 }}
-                          whileHover={{ scale: 1.04 }}
-                          type="button"
-                          onClick={() => setActiveModalProduct(product)}
-                          className="py-2.5 px-3.5 rounded-full text-xs font-medium text-ink-600 hover:text-ink-900 hover:bg-ivory-200 border border-gold-600/20"
-                          title="View technical specifications"
-                        >
-                          Specs
-                        </motion.button>
-                      </div>
-
-                    </div>
-                  </motion.div>
+                    product={product}
+                    isSelected={isSelected}
+                    onToggle={onToggleSelect}
+                    onOpenModal={() => setActiveModalProduct(product)}
+                  />
                 );
               })}
             </AnimatePresence>
@@ -337,10 +227,10 @@ export default function ProductCatalog({ selectedItems, onToggleSelect, onScroll
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
                 type="button"
-                onClick={onScrollToEnquiry}
+                onClick={onOpenDrawer}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 bg-gold-500 text-obsidian-950 text-xs font-bold uppercase tracking-wider hover:bg-gold-400 transition-all shadow-md"
               >
-                <span>Generate Quotation Dossier</span>
+                <span>Inspect Requisition Dossier</span>
                 <ArrowRight className="w-4 h-4" />
               </motion.button>
             </motion.div>

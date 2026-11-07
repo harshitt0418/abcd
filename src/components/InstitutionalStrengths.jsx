@@ -41,10 +41,12 @@ export default function InstitutionalStrengths() {
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
+                whileHover={{ y: -8, scale: 1.018 }}
                 transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -8 }}
-                className="p-8 rounded-3xl bg-white border border-gold-600/20 transition-all duration-300 shadow-xs hover:shadow-luxe hover:border-gold-600/50 flex flex-col justify-between"
+                className="p-8 rounded-3xl bg-white border border-gold-600/20 transition-all duration-300 shadow-xs hover:shadow-luxe hover:border-gold-600/60 flex flex-col justify-between relative overflow-hidden group"
               >
+                {/* Subtle gold gradient sheen on hover */}
+                <div className="absolute top-0 right-0 w-28 h-28 bg-gold-400/10 rounded-full filter blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                 <div>
                   <motion.div
                     whileHover={{ scale: 1.1, rotate: 6 }}

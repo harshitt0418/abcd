@@ -3,6 +3,7 @@ import { Send, CheckCircle2, AlertCircle, Trash2, Info, Building, ShieldCheck, M
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { COMPANY_INFO } from '../data/company';
+import MagneticButton from './MagneticButton';
 
 export default function EnquirySection({ selectedItems, onRemoveItem, onClearSelected }) {
   const [formData, setFormData] = useState({
@@ -395,12 +396,10 @@ export default function EnquirySection({ selectedItems, onRemoveItem, onClearSel
 
                   {/* Submit CTA with animated state */}
                   <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <motion.button
-                      whileHover={{ scale: 1.03, y: -2 }}
-                      whileTap={{ scale: 0.97 }}
+                    <MagneticButton
                       type="submit"
                       disabled={isSubmitting}
-                      className="btn-luxe w-full sm:w-auto"
+                      className="btn-luxe w-full sm:w-auto shadow-gold-glow cursor-pointer"
                     >
                       {isSubmitting ? (
                         <span>Compiling Dossier...</span>
@@ -410,7 +409,7 @@ export default function EnquirySection({ selectedItems, onRemoveItem, onClearSel
                           <span>Generate Institutional Dossier</span>
                         </>
                       )}
-                    </motion.button>
+                    </MagneticButton>
 
                     <span className="text-[11px] text-ink-400 font-light">
                       Confidential institutional inquiry • Verified against brochure catalog

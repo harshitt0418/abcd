@@ -9,14 +9,19 @@ import SectorsServed from './components/SectorsServed';
 import EnquirySection from './components/EnquirySection';
 import Footer from './components/Footer';
 import FloatingQuoteButton from './components/FloatingQuoteButton';
+import DossierDrawer from './components/DossierDrawer';
+import LuxuryCursor from './components/LuxuryCursor';
+import FloatingNavDots from './components/FloatingNavDots';
 import { PRODUCTS } from './data/products';
 
 export default function App() {
-  // Pre-seed 2 flagship brochure items to demonstrate immediate interactivity
+  // Pre-seed 2 flagship brochure items
   const [selectedProducts, setSelectedProducts] = useState([
     PRODUCTS.find((p) => p.id === 'ss-rdso') || PRODUCTS[3],
     PRODUCTS.find((p) => p.id === 'plastic-stand-trio') || PRODUCTS[11],
   ].filter(Boolean));
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleToggleSelect = (product) => {
     setSelectedProducts((prev) => {
@@ -52,28 +57,34 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fcfdfd] text-slate-800 antialiased selection:bg-sac-700 selection:text-white relative">
-      {/* Top Sticky Navigation with scroll progress */}
+    <div className="min-h-screen flex flex-col bg-ivory-100 text-ink-900 antialiased selection:bg-gold-500 selection:text-obsidian-950 relative">
+      {/* Luxury Ambient Interactive Cursor (Desktop) */}
+      <LuxuryCursor />
+
+      {/* Luxury Vertical Navigation Dots (Desktop) */}
+      <FloatingNavDots />
+
+      {/* Top Sticky Navigation with scroll progress & dossier trigger */}
       <Navbar
         enquiryItemsCount={selectedProducts.length}
-        onOpenEnquiry={scrollToEnquiry}
+        onOpenEnquiry={() => setIsDrawerOpen(true)}
       />
 
       <main className="flex-grow">
-        {/* Dynamic Hero Section with interactive brochure visual showcase and infinite ticker */}
+        {/* Dynamic Hero Section with interactive brochure visual showcase and live progress timer */}
         <Hero
           onEnquireClick={scrollToEnquiry}
           onExploreClick={scrollToProducts}
         />
 
-        {/* Proof Points & Factual Highlights with animated triggers */}
+        {/* Proof Points & Factual Highlights with animated spring metrics */}
         <ProofPoints />
 
-        {/* Comprehensive Product Catalog Explorer with sliding tabs & layout transitions */}
+        {/* Comprehensive Product Catalog Explorer with 3D tilt cards & sliding tabs */}
         <ProductCatalog
           selectedItems={selectedProducts}
           onToggleSelect={handleToggleSelect}
-          onScrollToEnquiry={scrollToEnquiry}
+          onOpenDrawer={() => setIsDrawerOpen(true)}
         />
 
         {/* Company Introduction & Group Synergy with interactive timeline */}
@@ -85,7 +96,7 @@ export default function App() {
         {/* Documented Public Sectors & Clientele with interactive sector viewer */}
         <SectorsServed />
 
-        {/* Institutional Enquiry & Quote Generator with confetti celebratory submission */}
+        {/* Institutional Enquiry & Quote Generator with dual confetti cannons */}
         <EnquirySection
           selectedItems={selectedProducts}
           onRemoveItem={handleRemoveItem}
@@ -93,10 +104,20 @@ export default function App() {
         />
       </main>
 
+      {/* Slide-over Requisition Dossier Drawer */}
+      <DossierDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        items={selectedProducts}
+        onRemoveItem={handleRemoveItem}
+        onClearAll={handleClearSelected}
+        onProceedToEnquiry={scrollToEnquiry}
+      />
+
       {/* Persistent Floating Quote Button */}
       <FloatingQuoteButton
         count={selectedProducts.length}
-        onOpen={scrollToEnquiry}
+        onOpen={() => setIsDrawerOpen(true)}
       />
 
       {/* Footer */}

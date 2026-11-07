@@ -224,15 +224,23 @@ export default function AboutSection() {
             {/* Quality Standard Note in Obsidian & Gold */}
             <motion.div
               whileHover={{ scale: 1.02 }}
-              className="p-7 rounded-3xl bg-obsidian-950 text-ivory-100 flex items-start gap-4 shadow-luxe border border-gold-600/30 transition-all"
+              className="p-7 rounded-3xl bg-obsidian-950 text-ivory-100 flex items-start gap-4 shadow-luxe border border-gold-600/30 transition-all relative overflow-hidden"
             >
-              <motion.img
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
-                src={sacLogo}
-                alt="SAC Seal"
-                className="w-10 h-10 rounded-full flex-shrink-0 mt-0.5 border border-gold-500/50 cursor-pointer"
-              />
+              <div className="relative flex-shrink-0 mt-0.5">
+                {/* Slow rotating luxury gold ring */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+                  className="absolute -inset-1.5 rounded-full border border-dashed border-gold-400/40 pointer-events-none"
+                />
+                <motion.img
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 1.5, ease: "easeInOut" }}
+                  src={sacLogo}
+                  alt="SAC Seal"
+                  className="w-10 h-10 rounded-full border border-gold-500/50 cursor-pointer relative z-10"
+                />
+              </div>
               <div>
                 <p className="text-xs font-bold uppercase tracking-luxe text-gold-400">
                   Strict Metallurgical & Chemical Controls
