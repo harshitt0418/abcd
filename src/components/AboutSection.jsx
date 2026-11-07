@@ -31,7 +31,11 @@ export default function AboutSection() {
   const [activeMilestone, setActiveMilestone] = useState(0);
 
   return (
-    <section id="about" className="py-24 sm:py-32 bg-ivory-100 border-b border-gold-600/20 overflow-hidden">
+    <section id="about" className="py-24 sm:py-32 bg-ivory-100 border-b border-gold-600/20 overflow-hidden relative">
+      
+      {/* Background Soft Glow */}
+      <div className="absolute top-1/2 left-0 w-80 h-80 rounded-full bg-gold-400/10 filter blur-3xl pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -65,8 +69,12 @@ export default function AboutSection() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-7 space-y-8"
           >
-            {/* Executive Quote Callout */}
-            <div className="p-8 rounded-3xl bg-white border border-gold-600/30 shadow-xs relative">
+            {/* Executive Quote Callout with subtle floating glow */}
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              className="p-8 rounded-3xl bg-white border border-gold-600/30 shadow-xs relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gold-400/10 rounded-full filter blur-xl pointer-events-none" />
               <span className="text-4xl font-serif text-gold-600/40 absolute top-4 left-6">“</span>
               <p className="font-serif italic text-lg sm:text-xl text-ink-900 leading-relaxed pl-6 pt-2 font-normal">
                 Over four decades, our mandate has been unequivocal: delivering uncompromised metallurgical precision and certified chemical formulations that withstand continuous public utility deployment.
@@ -77,33 +85,34 @@ export default function AboutSection() {
                   <p className="text-[10px] font-mono tracking-wider text-gold-700 uppercase">Managing Director • Saurabh Agro Chemicals</p>
                 </div>
                 <div className="flex items-center gap-2 text-xs font-mono text-ink-400">
-                  <span>ESTD 1984</span>
+                  <span className="text-gold-600 font-bold">ESTD 1984</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Interactive Timeline Progression */}
+            {/* Interactive Timeline Progression with Active Indicator */}
             <div className="p-7 rounded-3xl bg-white border border-gold-600/20 shadow-xs">
               <h4 className="text-[11px] font-bold uppercase tracking-luxe text-gold-700 mb-5 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-gold-600" />
                 <span>Institutional Milestones (1984 – Present)</span>
               </h4>
 
-              {/* Year Selector Tabs */}
+              {/* Year Selector Tabs with Animated Active Indicator */}
               <div className="grid grid-cols-4 gap-2 mb-5">
                 {MILESTONES.map((m, idx) => (
-                  <button
+                  <motion.button
+                    whileTap={{ scale: 0.95 }}
                     key={m.year}
                     type="button"
                     onClick={() => setActiveMilestone(idx)}
                     className={`py-2.5 px-2 text-center rounded-full text-xs font-semibold tracking-wider uppercase transition-all ${
                       activeMilestone === idx
-                        ? 'bg-obsidian-950 text-ivory-100 shadow-sm border border-gold-600/50'
+                        ? 'bg-obsidian-950 text-ivory-100 shadow-md border border-gold-600/50 scale-[1.02]'
                         : 'bg-ivory-100 text-ink-700 hover:bg-ivory-200'
                     }`}
                   >
                     {m.year}
-                  </button>
+                  </motion.button>
                 ))}
               </div>
 
@@ -111,9 +120,9 @@ export default function AboutSection() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeMilestone}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.98 }}
                   transition={{ duration: 0.3 }}
                   className="p-5 rounded-2xl bg-ivory-200/50 border border-gold-600/20 text-left"
                 >
@@ -127,7 +136,7 @@ export default function AboutSection() {
               </AnimatePresence>
             </div>
 
-            {/* Sister Concerns Box */}
+            {/* Sister Concerns Box with Shimmer Hover */}
             <div className="p-7 rounded-3xl bg-white border border-gold-600/20 shadow-xs">
               <div className="flex items-center gap-2.5 mb-4 text-[11px] font-bold uppercase tracking-luxe text-gold-700">
                 <Users className="w-4 h-4 text-gold-600" />
@@ -140,9 +149,9 @@ export default function AboutSection() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {COMPANY_INFO.sisterConcerns.map((sc) => (
                   <motion.div
-                    whileHover={{ y: -3 }}
+                    whileHover={{ y: -4, borderColor: '#C5A059' }}
                     key={sc.name}
-                    className="p-5 rounded-2xl bg-ivory-50 border border-gold-600/20"
+                    className="p-5 rounded-2xl bg-ivory-50 border border-gold-600/20 transition-all shadow-2xs hover:shadow-xs"
                   >
                     <p className="font-serif font-medium text-sm text-ink-900">{sc.name}</p>
                     <p className="text-xs text-gold-700 font-medium mt-0.5">{sc.location}</p>
@@ -155,14 +164,18 @@ export default function AboutSection() {
             {/* Corporate Hubs */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               {COMPANY_INFO.locations.map((loc) => (
-                <div key={loc.city} className="p-5 rounded-2xl bg-white border border-gold-600/20">
+                <motion.div
+                  whileHover={{ y: -3 }}
+                  key={loc.city}
+                  className="p-5 rounded-2xl bg-white border border-gold-600/20 shadow-2xs transition-transform"
+                >
                   <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink-900 mb-1.5">
                     <Building2 className="w-4 h-4 text-gold-600" />
                     <span>{loc.city} ({loc.state})</span>
                   </div>
                   <p className="text-xs text-ink-600 font-mono leading-relaxed">{loc.address}</p>
                   <p className="text-[11px] text-gold-800 font-medium mt-2">{loc.role}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
 
@@ -178,7 +191,7 @@ export default function AboutSection() {
           >
             {/* Vision Card */}
             <motion.div
-              whileHover={{ y: -5 }}
+              whileHover={{ y: -6, scale: 1.01 }}
               className="p-7 sm:p-8 rounded-3xl bg-white border border-gold-600/20 shadow-xs relative overflow-hidden transition-all"
             >
               <div className="w-11 h-11 rounded-2xl bg-gold-500/10 border border-gold-600/30 flex items-center justify-center text-gold-700 mb-5">
@@ -194,7 +207,7 @@ export default function AboutSection() {
 
             {/* Mission Card */}
             <motion.div
-              whileHover={{ y: -5 }}
+              whileHover={{ y: -6, scale: 1.01 }}
               className="p-7 sm:p-8 rounded-3xl bg-white border border-gold-600/20 shadow-xs relative overflow-hidden transition-all"
             >
               <div className="w-11 h-11 rounded-2xl bg-gold-500/10 border border-gold-600/30 flex items-center justify-center text-gold-700 mb-5">
@@ -209,8 +222,17 @@ export default function AboutSection() {
             </motion.div>
 
             {/* Quality Standard Note in Obsidian & Gold */}
-            <div className="p-7 rounded-3xl bg-obsidian-950 text-ivory-100 flex items-start gap-4 shadow-luxe border border-gold-600/30">
-              <img src={sacLogo} alt="SAC Seal" className="w-10 h-10 rounded-full flex-shrink-0 mt-0.5 border border-gold-500/50" />
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="p-7 rounded-3xl bg-obsidian-950 text-ivory-100 flex items-start gap-4 shadow-luxe border border-gold-600/30 transition-all"
+            >
+              <motion.img
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+                src={sacLogo}
+                alt="SAC Seal"
+                className="w-10 h-10 rounded-full flex-shrink-0 mt-0.5 border border-gold-500/50 cursor-pointer"
+              />
               <div>
                 <p className="text-xs font-bold uppercase tracking-luxe text-gold-400">
                   Strict Metallurgical & Chemical Controls
@@ -219,7 +241,7 @@ export default function AboutSection() {
                   All stainless steel fabrications undergo rigorous 304-grade spectro-analysis; polymer molding strictly uses UV-stabilized virgin polymers, and vector control insecticides comply with designated active percentages.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
           </motion.div>
 

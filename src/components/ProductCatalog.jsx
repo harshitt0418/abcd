@@ -8,6 +8,7 @@ export default function ProductCatalog({ selectedItems, onToggleSelect, onScroll
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [activeModalProduct, setActiveModalProduct] = useState(null);
+  const [lastAddedId, setLastAddedId] = useState(null);
 
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter((item) => {
@@ -31,12 +32,26 @@ export default function ProductCatalog({ selectedItems, onToggleSelect, onScroll
 
   const activeCategoryObj = CATEGORIES.find((c) => c.id === activeCategory);
 
+  const handleItemSelect = (product) => {
+    onToggleSelect(product);
+    setLastAddedId(product.id);
+    setTimeout(() => {
+      setLastAddedId((prev) => (prev === product.id ? null : prev));
+    }, 1500);
+  };
+
   return (
     <section id="products" className="py-24 sm:py-32 bg-ivory-50 border-b border-gold-600/20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="max-w-3xl mb-14 text-left">
+        {/* Section Header with Staggered Scroll Animation */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-3xl mb-14 text-left"
+        >
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-luxe text-gold-700 mb-3">
             <span className="w-1.5 h-1.5 rounded-full bg-gold-600"></span>
             <span>The Institutional Collection • Brochure Catalog</span>
@@ -47,7 +62,7 @@ export default function ProductCatalog({ selectedItems, onToggleSelect, onScroll
           <p className="mt-4 text-sm sm:text-base text-ink-600 leading-relaxed font-light">
             Manufactured and formulated strictly for Indian Railways, municipal corporations, public utilities, and health departments. Select any specimen to inspect technical specifications or queue it for institutional procurement.
           </p>
-        </div>
+        </motion.div>
 
         {/* Search & Category Filter Controls */}
         <div className="space-y-6 mb-12">
@@ -171,26 +186,43 @@ export default function ProductCatalog({ selectedItems, onToggleSelect, onScroll
             <AnimatePresence>
               {filteredProducts.map((product) => {
                 const isSelected = selectedItems.some((item) => item.id === product.id);
+                const isJustAdded = lastAddedId === product.id;
 
                 return (
                   <motion.div
                     layout
                     key={product.id}
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    initial={{ opacity: 0, scale: 0.94 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
+                    exit={{ opacity: 0, scale: 0.94 }}
                     transition={{ duration: 0.35 }}
-                    whileHover={{ y: -8 }}
-                    className="group bg-white rounded-3xl border border-gold-600/20 overflow-hidden shadow-xs hover:shadow-luxe hover:border-gold-600/50 transition-all duration-300 flex flex-col text-left"
+                    whileHover={{ y: -8, scale: 1.01 }}
+                    className="group bg-white rounded-3xl border border-gold-600/20 overflow-hidden shadow-xs hover:shadow-luxe hover:border-gold-600/50 transition-all duration-300 flex flex-col text-left relative"
                   >
-                    {/* Image Stage */}
+                    {/* Floating "+1 Added" Toast Animation on Card */}
+                    <AnimatePresence>
+                      {isJustAdded && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, y: -20, scale: 1 }}
+                          exit={{ opacity: 0, y: -35 }}
+                          transition={{ duration: 0.6 }}
+                          className="absolute top-4 right-4 z-30 bg-gold-500 text-obsidian-950 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg flex items-center gap-1"
+                        >
+                          <Sparkles className="w-3 h-3" />
+                          <span>Dossier Updated!</span>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* Image Stage with Mouse Hover Parallax */}
                     <div
                       onClick={() => setActiveModalProduct(product)}
                       className="relative aspect-square bg-[#FAF9F6] p-6 flex items-center justify-center cursor-pointer overflow-hidden border-b border-ivory-200"
                     >
                       <motion.img
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ type: "spring", stiffness: 240, damping: 20 }}
+                        whileHover={{ scale: 1.12, rotate: 1 }}
+                        transition={{ type: "spring", stiffness: 220, damping: 18 }}
                         src={product.image}
                         alt={product.name}
                         loading="lazy"
@@ -225,12 +257,13 @@ export default function ProductCatalog({ selectedItems, onToggleSelect, onScroll
                         </p>
                       </div>
 
-                      {/* Action Buttons */}
+                      {/* Action Buttons with Spring Feedback */}
                       <div className="pt-4 border-t border-ivory-200 flex items-center gap-2">
                         <motion.button
-                          whileTap={{ scale: 0.94 }}
+                          whileTap={{ scale: 0.92 }}
+                          whileHover={{ scale: 1.02 }}
                           type="button"
-                          onClick={() => onToggleSelect(product)}
+                          onClick={() => handleItemSelect(product)}
                           className={`flex-1 py-2.5 px-3 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all ${
                             isSelected
                               ? 'bg-gold-500/20 text-gold-900 border border-gold-600 hover:bg-gold-500/30'
@@ -251,7 +284,8 @@ export default function ProductCatalog({ selectedItems, onToggleSelect, onScroll
                         </motion.button>
 
                         <motion.button
-                          whileTap={{ scale: 0.94 }}
+                          whileTap={{ scale: 0.92 }}
+                          whileHover={{ scale: 1.04 }}
                           type="button"
                           onClick={() => setActiveModalProduct(product)}
                           className="py-2.5 px-3.5 rounded-full text-xs font-medium text-ink-600 hover:text-ink-900 hover:bg-ivory-200 border border-gold-600/20"

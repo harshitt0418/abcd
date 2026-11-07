@@ -78,18 +78,28 @@ export default function EnquirySection({ selectedItems, onRemoveItem, onClearSel
           }),
         });
 
-        // Trigger celebratory gold/bronze confetti cannon
+        // Dual luxury gold/brass confetti cannons
         try {
+          // Left cannon
           confetti({
-            particleCount: 90,
-            spread: 80,
-            origin: { y: 0.62 },
+            particleCount: 60,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0.1, y: 0.7 },
+            colors: ['#D4AF37', '#C5A059', '#B8935A', '#0F1211', '#17625A']
+          });
+          // Right cannon
+          confetti({
+            particleCount: 60,
+            angle: 120,
+            spread: 55,
+            origin: { x: 0.9, y: 0.7 },
             colors: ['#D4AF37', '#C5A059', '#B8935A', '#0F1211', '#17625A']
           });
         } catch (err) {
           // graceful fallback
         }
-      }, 700);
+      }, 750);
     }
   };
 
@@ -110,7 +120,7 @@ export default function EnquirySection({ selectedItems, onRemoveItem, onClearSel
   };
 
   return (
-    <section id="enquiry" className="py-24 sm:py-32 bg-ivory-50 border-b border-gold-600/20 overflow-hidden">
+    <section id="enquiry" className="py-24 sm:py-32 bg-ivory-50 border-b border-gold-600/20 overflow-hidden relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
         
         {/* Header */}
@@ -148,19 +158,19 @@ export default function EnquirySection({ selectedItems, onRemoveItem, onClearSel
           <div className="lg:col-span-8 bg-white rounded-3xl border border-gold-600/20 shadow-xs p-7 sm:p-10">
             <AnimatePresence mode="wait">
               {submittedData ? (
-                /* Success State */
+                /* Success State with celebratory scale & rotation */
                 <motion.div
                   key="success-card"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4 }}
+                  initial={{ opacity: 0, scale: 0.92, y: 15 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.92, y: 15 }}
+                  transition={{ type: "spring", stiffness: 350, damping: 25 }}
                   className="space-y-6 text-center py-6"
                 >
                   <motion.div
-                    initial={{ scale: 0.5, rotate: -20 }}
+                    initial={{ scale: 0.4, rotate: -30 }}
                     animate={{ scale: 1, rotate: 0 }}
-                    transition={{ type: "spring", stiffness: 350, damping: 15 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
                     className="w-16 h-16 rounded-full bg-gold-500/20 border border-gold-600/40 text-gold-800 mx-auto flex items-center justify-center shadow-gold-glow"
                   >
                     <CheckCircle2 className="w-9 h-9 text-gold-700" />
@@ -178,7 +188,7 @@ export default function EnquirySection({ selectedItems, onRemoveItem, onClearSel
                     </p>
                   </div>
 
-                  <div className="p-5 rounded-2xl bg-ivory-100 border border-gold-600/20 text-left text-xs space-y-2.5 max-w-md mx-auto">
+                  <div className="p-5 rounded-2xl bg-ivory-100 border border-gold-600/20 text-left text-xs space-y-2.5 max-w-md mx-auto shadow-2xs">
                     <div className="flex justify-between">
                       <span className="text-ink-500">Indenting Officer:</span>
                       <span className="font-serif font-medium text-ink-900">{submittedData.officerName}</span>
@@ -209,8 +219,8 @@ export default function EnquirySection({ selectedItems, onRemoveItem, onClearSel
 
                   <div className="pt-3">
                     <motion.button
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
+                      whileHover={{ scale: 1.04 }}
+                      whileTap={{ scale: 0.96 }}
                       type="button"
                       onClick={handleReset}
                       className="btn-luxe"
@@ -383,11 +393,11 @@ export default function EnquirySection({ selectedItems, onRemoveItem, onClearSel
                     ></textarea>
                   </div>
 
-                  {/* Submit CTA */}
+                  {/* Submit CTA with animated state */}
                   <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ scale: 1.03, y: -2 }}
+                      whileTap={{ scale: 0.97 }}
                       type="submit"
                       disabled={isSubmitting}
                       className="btn-luxe w-full sm:w-auto"
