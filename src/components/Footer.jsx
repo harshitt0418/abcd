@@ -11,11 +11,11 @@ export default function Footer() {
 
   const navLinks = [
     { label: "Overview", href: "#overview" },
-    { label: "Product Portfolio", href: "#products" },
-    { label: "About SAC", href: "#about" },
+    { label: "Collection", href: "#products" },
+    { label: "Heritage", href: "#about" },
     { label: "Institutional Supply", href: "#capabilities" },
     { label: "Sectors Served", href: "#sectors" },
-    { label: "Procurement Enquiry", href: "#enquiry" },
+    { label: "Requisition Dossier", href: "#enquiry" },
   ];
 
   const handleNavClick = (e, href) => {
@@ -27,57 +27,57 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-slate-950 text-slate-300 pt-16 pb-12 border-t border-slate-900 text-left overflow-hidden">
+    <footer className="bg-obsidian-950 text-ivory-300 pt-20 pb-12 border-t border-gold-600/30 text-left overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-12 border-b border-slate-900">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-14 border-b border-gold-600/20">
           
           {/* Brand & Wordmark (5 Cols) */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3.5">
               <motion.div
                 whileHover={{ rotate: 12, scale: 1.05 }}
-                className="w-10 h-10 rounded-full bg-white p-0.5 flex-shrink-0 cursor-pointer"
+                className="w-11 h-11 rounded-full bg-white p-0.5 flex-shrink-0 cursor-pointer border border-gold-400"
               >
                 <img
                   src={sacLogo}
-                  alt="Saurabh Agro Chemicals Logo"
+                  alt="Saurabh Agro Chemicals Seal"
                   className="w-full h-full object-cover rounded-full"
                 />
               </motion.div>
               <div>
-                <h3 className="font-display font-bold text-lg text-white">
+                <h3 className="font-serif text-xl text-ivory-100 font-medium">
                   {COMPANY_INFO.name}
                 </h3>
-                <p className="text-xs text-sac-400 font-medium">
+                <p className="text-xs text-gold-400 tracking-luxe uppercase font-sans font-semibold">
                   {COMPANY_INFO.brandName} • Established {COMPANY_INFO.established}
                 </p>
               </div>
             </div>
 
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-sm font-normal">
+            <p className="text-xs sm:text-sm text-ivory-300 leading-relaxed max-w-sm font-light">
               Manufacturer and bulk supplier of stainless steel dustbins, waste management systems, safety equipment, and agro chemicals. Serving Indian Railways, government departments, and municipal corporations nationwide.
             </p>
 
-            <div className="pt-2 flex items-center gap-2 text-xs text-slate-500 font-mono">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            <div className="pt-2 flex items-center gap-2 text-xs text-gold-400 font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold-400"></span>
               <span>Managing Director: {COMPANY_INFO.managingDirector}</span>
             </div>
           </div>
 
           {/* Quick Links (2 Cols) */}
           <div className="lg:col-span-2 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">
+            <h4 className="text-[11px] font-bold uppercase tracking-luxe text-gold-400">
               Navigation
             </h4>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2.5 text-xs font-light">
               {navLinks.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className="text-slate-400 hover:text-white transition-colors"
+                    className="text-ivory-300 hover:text-gold-400 transition-colors uppercase tracking-wider text-[11px]"
                   >
                     {link.label}
                   </a>
@@ -88,37 +88,37 @@ export default function Footer() {
 
           {/* Brochure Addresses (5 Cols) */}
           <div className="lg:col-span-5 space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">
+            <h4 className="text-[11px] font-bold uppercase tracking-luxe text-gold-400">
               Brochure Listed Addresses
             </h4>
 
-            <div className="space-y-3 text-xs">
+            <div className="space-y-3 text-xs font-light">
               {/* Regd Office */}
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-sac-400 flex-shrink-0 mt-0.5" />
+              <div className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-gold-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-white font-semibold block">Registered Office:</span>
-                  <span className="text-slate-400">{COMPANY_INFO.locations[0].address}</span>
+                  <span className="text-ivory-100 font-semibold uppercase tracking-wider text-[10px] block">Registered Office:</span>
+                  <span className="text-ivory-300">{COMPANY_INFO.locations[0].address}</span>
                 </div>
               </div>
 
               {/* Branch Office */}
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-sac-400 flex-shrink-0 mt-0.5" />
+              <div className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-gold-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-white font-semibold block">Branch Office & Manufacturing Unit:</span>
-                  <span className="text-slate-400">{COMPANY_INFO.locations[1].address}</span>
+                  <span className="text-ivory-100 font-semibold uppercase tracking-wider text-[10px] block">Branch Office & Manufacturing Unit:</span>
+                  <span className="text-ivory-300">{COMPANY_INFO.locations[1].address}</span>
                 </div>
               </div>
 
               {/* Contact Notice */}
-              <div className="flex items-start gap-2.5 pt-1">
-                <Mail className="w-4 h-4 text-sac-400 flex-shrink-0 mt-0.5" />
+              <div className="flex items-start gap-3 pt-1">
+                <Mail className="w-4 h-4 text-gold-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-white font-semibold block">Official Email:</span>
+                  <span className="text-ivory-100 font-semibold uppercase tracking-wider text-[10px] block">Official Email:</span>
                   <a
                     href={`mailto:${COMPANY_INFO.contacts.email}`}
-                    className="text-sac-400 hover:underline font-mono"
+                    className="text-gold-400 hover:underline font-mono"
                   >
                     {COMPANY_INFO.contacts.email}
                   </a>
@@ -126,8 +126,8 @@ export default function Footer() {
               </div>
 
               {/* Verified Phone Notice */}
-              <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-400">
-                <strong className="text-slate-300">Contact Number:</strong> Contact number to be confirmed (discrepancy between brochure cover and back page flagged for verification).
+              <div className="p-3 rounded-xl bg-obsidian-900 border border-gold-600/20 text-[11px] text-ivory-300 font-light">
+                <strong className="text-gold-400 font-semibold">Contact Number:</strong> Contact numbers differ between brochure cover and back page and are flagged for verification.
               </div>
             </div>
           </div>
@@ -135,7 +135,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ivory-400 font-light">
           <p>© 1984–2026 {COMPANY_INFO.name}. All brochure specifications, product images, and credentials verified.</p>
           
           <motion.button
@@ -143,7 +143,7 @@ export default function Footer() {
             whileTap={{ scale: 0.96 }}
             type="button"
             onClick={scrollToTop}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-obsidian-900 border border-gold-600/30 text-gold-400 hover:text-ivory-100 hover:bg-gold-600/20 transition-all text-xs uppercase tracking-wider font-semibold"
           >
             <span>Back to top</span>
             <ArrowUp className="w-3.5 h-3.5" />

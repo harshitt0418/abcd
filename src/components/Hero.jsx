@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowRight, FileText, CheckCircle2, ChevronRight, Pause, Play, Sparkles } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowRight, ChevronLeft, ChevronRight, FileText, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import brochureHeroCircle from '../assets/brochure_hero_circle.png';
 import ssRdso from '../assets/products/ss_rdso.jpg';
@@ -11,314 +11,292 @@ import sacLogo from '../assets/sac_logo_circle.png';
 const HERO_SLIDES = [
   {
     id: 'pillars',
-    title: '4 Core Brochure Pillars',
-    tag: 'Official Brochure Composition',
-    desc: 'Stainless Steel Waste Systems, Heavy-Duty HDPE Municipal Bins, Industrial Safety PPE & Public Health Chemicals.',
+    num: '01',
+    category: 'Institutional Scope',
+    title: 'The Four Pillars of Institutional Supply',
+    subtitle: 'Grade 304 Stainless Steel • Municipal Waste Infrastructure • Industrial Safety PPE • Certified Agro Chemicals',
     image: brochureHeroCircle,
-    spec: 'Full Institutional Range',
-    badge: 'SAC Verified Scope'
+    spec: 'Authentic Brochure Catalog',
+    highlight: 'Comprehensive Portfolio'
   },
   {
     id: 'railways',
-    title: 'RDSO Approved SS Dustbin',
-    tag: 'Indian Railways Specification',
-    desc: 'Grade 304 heavy-gauge stainless steel with tamper-proof security chain and lock bracket for passenger coaches and station platforms.',
+    num: '02',
+    category: 'Indian Railways Division',
+    title: 'RDSO Drawing-Approved Stainless Steel Systems',
+    subtitle: 'Heavy-gauge Grade 304 fabrication featuring tamper-proof security chain and coach lock assemblies.',
     image: ssRdso,
-    spec: 'Grade 304 Stainless Steel',
-    badge: 'Approved by RDSO Drawing'
+    spec: 'RDSO Compliant • Grade 304',
+    highlight: 'Indian Railways Partner'
   },
   {
     id: 'municipal',
-    title: 'Nagar Palika Trio Waste Station',
-    tag: 'Municipal Waste Segregation',
-    desc: 'Color-coded triple hanging bins mounted on anti-corrosion powder-coated metal frame for Gram Panchayats and urban local bodies.',
+    num: '03',
+    category: 'Urban Local Bodies',
+    title: 'Trio Municipal Segregation Stations',
+    subtitle: 'Color-coded hanging waste stations mounted on anti-corrosive frames for Gram Panchayats and Nagar Palikas.',
     image: plasticStandTrio,
     spec: 'UV-Stabilized Virgin HDPE',
-    badge: 'Nagar Palika Design'
+    highlight: 'Swachh Bharat Infrastructure'
   },
   {
     id: 'safety',
-    title: 'ISI Mark Fire Extinguisher',
-    tag: 'Industrial Safety & PPE',
-    desc: 'Heavy-duty dry chemical powder stored-pressure vessel for public buildings, railway workshops, and industrial complexes.',
+    num: '04',
+    category: 'Industrial Protection',
+    title: 'ISI Mark Certified Fire Extinguishers & PPE',
+    subtitle: 'Heavy-duty dry chemical pressure vessels and 360° retro-reflective gear safeguarding public workers.',
     image: safetyFireExtinguisher,
-    spec: 'ISI Mark Certified (BIS)',
-    badge: 'Industrial Hazard Protection'
+    spec: 'ISI Mark BIS Certified',
+    highlight: 'Workplace Hazard Defense'
   },
   {
     id: 'chemicals',
-    title: 'Temephos 50% EC Paraguard',
-    tag: 'Public Health Vector Control',
-    desc: 'Emulsifiable concentrate larvicide specifically recommended by health departments for eradicating mosquito larvae in breeding sites.',
+    num: '05',
+    category: 'Public Health Vector Control',
+    title: 'Temephos 50% EC & Pyrethroid Formulations',
+    subtitle: 'WHO-grade larvicide solutions engineered for large-scale mosquito eradication across civic water bodies.',
     image: chemTemephosEc,
-    spec: '50% EC Active Larvicide',
-    badge: 'Anti-Malaria Vector Control'
+    spec: '50% Active EC Concentration',
+    highlight: 'Anti-Malaria Vector Control'
   }
 ];
 
 const TICKER_ITEMS = [
   "ESTABLISHED 1984",
-  "40+ YEARS INSTITUTIONAL SUPPLY",
-  "RDSO DRAWING APPROVED DUSTBINS",
-  "DELHI MANUFACTURING UNIT",
-  "GORAKHPUR CORPORATE HQ",
+  "40+ YEARS INSTITUTIONAL EXCELLENCE",
   "SUPPLYING INDIAN RAILWAYS",
-  "MUNICIPAL CORPORATIONS & LOCAL BODIES",
+  "RDSO DRAWING COMPLIANT FABRICATION",
+  "DELHI MANUFACTURING UNIT",
+  "GORAKHPUR CORPORATE HEADQUARTERS",
+  "MUNICIPAL CORPORATIONS & URBAN LOCAL BODIES",
   "INDIAN ARMY, NAVY & ONGC",
   "STRICT QUALITY CONTROL STANDARDS"
 ];
 
 export default function Hero({ onEnquireClick, onExploreClick }) {
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [index, setIndex] = useState(0);
+  const total = HERO_SLIDES.length;
+  const isHoveredRef = useRef(false);
 
   useEffect(() => {
-    if (!isAutoPlaying) return;
-    const interval = setInterval(() => {
-      setCurrentSlideIndex((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 4500);
-    return () => clearInterval(interval);
-  }, [isAutoPlaying]);
+    const timer = setInterval(() => {
+      if (!isHoveredRef.current) {
+        setIndex((prev) => (prev + 1) % total);
+      }
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [total]);
 
-  const currentSlide = HERO_SLIDES[currentSlideIndex];
-
-  // Motion container variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 16 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-    },
-  };
+  const goTo = (next) => setIndex((next + total) % total);
+  const currentSlide = HERO_SLIDES[index];
 
   return (
-    <section id="overview" className="relative pt-28 pb-14 md:pt-36 md:pb-20 lg:pt-40 lg:pb-24 overflow-hidden bg-gradient-to-b from-[#fcfdfd] via-[#f7faf9] to-[#f4f7f6]">
-      {/* Background Architectural Grid Pattern */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.035] bg-[radial-gradient(#09332f_1px,transparent_1px)] [background-size:24px_24px]"></div>
+    <section id="overview" className="relative pt-24 sm:pt-28 pb-16 overflow-hidden bg-ivory-100">
+      
+      {/* Decorative Subtle Architecture Background */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[radial-gradient(#C5A059_1px,transparent_1px)] [background-size:28px_28px]" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Top Editorial Eyebrow & Headline Header */}
+        <div className="text-center max-w-4xl mx-auto space-y-4 pt-4 sm:pt-6 pb-10">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-600/30 text-gold-900 text-xs font-semibold uppercase tracking-luxe shadow-xs"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-gold-600 animate-pulse" />
+            <span>Established 1984 • Four Decades of Institutional Manufacturing</span>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="font-serif text-3xl sm:text-5xl lg:text-6xl text-ink-900 leading-[1.12] tracking-tight"
+          >
+            Dependable hygiene, safety, <br className="hidden sm:inline" />
+            <span className="italic font-normal text-gold-700">and agro solutions.</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="text-sm sm:text-base text-ink-600 max-w-2xl mx-auto leading-relaxed font-light"
+          >
+            Saurabh Agro Chemicals is an established manufacturer and institutional supplier delivering RDSO-approved stainless steel systems, municipal waste infrastructure, industrial safety equipment, and public health agro-chemicals to Indian Railways and government bodies nationwide.
+          </motion.p>
+        </div>
+
+        {/* Cinematic Grand Architectural Slideshow Box inspired by reference website */}
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="relative rounded-3xl bg-obsidian-950 text-ivory-100 shadow-luxe border border-gold-600/30 overflow-hidden"
+          onMouseEnter={() => { isHoveredRef.current = true; }}
+          onMouseLeave={() => { isHoveredRef.current = false; }}
         >
           
-          {/* Left Column: Restrained Editorial Copy with Staggered Entrance */}
-          <div className="lg:col-span-7 space-y-6 sm:space-y-8 text-left">
+          {/* Main Showcase Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[460px] sm:min-h-[500px]">
             
-            {/* Fact-based Badge */}
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-sac-100/70 border border-sac-200 text-sac-900 text-xs font-semibold tracking-wide uppercase shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-sac-600 animate-pulse"></span>
-              <span>Established 1984 • Over 40 Years of Institutional Supply</span>
-            </motion.div>
-
-            {/* Confident Headline */}
-            <motion.h1
-              variants={itemVariants}
-              className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-900 leading-[1.12] tracking-tight"
-            >
-              Dependable hygiene, safety, and agro solutions.
-            </motion.h1>
-
-            {/* One Concise Supporting Sentence */}
-            <motion.p
-              variants={itemVariants}
-              className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl font-normal"
-            >
-              Saurabh Agro Chemicals is an established manufacturer and institutional supplier delivering RDSO-approved stainless steel systems, municipal waste infrastructure, industrial safety equipment, and public health agro-chemicals to Indian Railways and government bodies nationwide.
-            </motion.p>
-
-            {/* Actions with Spring Hover */}
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2"
-            >
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                type="button"
-                onClick={onEnquireClick}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-sac-800 text-white font-semibold text-sm hover:bg-sac-900 transition-all shadow-subtle hover:shadow-premium focus:outline-none focus:ring-2 focus:ring-sac-600 focus:ring-offset-2"
-              >
-                <span>Request Institutional Quotation</span>
-                <ArrowRight className="w-4 h-4" />
-              </motion.button>
-
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                type="button"
-                onClick={onExploreClick}
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-lg bg-white border border-slate-300 text-slate-700 font-semibold text-sm hover:bg-slate-50 hover:text-slate-900 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
-              >
-                <FileText className="w-4 h-4 text-sac-700" />
-                <span>Explore Brochure Catalog</span>
-              </motion.button>
-            </motion.div>
-
-            {/* Institutional Credentials Strip */}
-            <motion.div
-              variants={itemVariants}
-              className="pt-6 border-t border-slate-200/80 grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs text-slate-600"
-            >
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-sac-700 flex-shrink-0" />
-                <span>RDSO Drawing Approved</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-sac-700 flex-shrink-0" />
-                <span>Delhi Manufacturing Facility</span>
-              </div>
-              <div className="flex items-center gap-2 col-span-2 sm:col-span-1">
-                <CheckCircle2 className="w-4 h-4 text-sac-700 flex-shrink-0" />
-                <span>Bulk Tender Fulfillment</span>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Right Column: Dynamic Interactive Brochure Visual Showcase */}
-          <motion.div
-            variants={itemVariants}
-            className="lg:col-span-5 flex flex-col items-center"
-            onMouseEnter={() => setIsAutoPlaying(false)}
-            onMouseLeave={() => setIsAutoPlaying(true)}
-          >
-            <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-none">
+            {/* Left Column: Product Spotlight Graphic with Ken Burns Motion */}
+            <div className="lg:col-span-7 relative flex items-center justify-center p-8 sm:p-12 overflow-hidden bg-gradient-to-br from-obsidian-950 via-[#111918] to-[#0A1816]">
               
-              {/* Outer Interactive Showcase Card */}
-              <div className="relative p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/90 shadow-premium transition-all">
-                
-                {/* Visual Viewport with AnimatePresence Transitions */}
-                <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-[#f3f7f6] flex items-center justify-center p-4 sm:p-6">
-                  
-                  {/* Subtle ambient animated pulse glow behind image */}
-                  <div className="absolute inset-0 bg-radial from-sac-100/60 via-transparent to-transparent opacity-60 pointer-events-none" />
+              {/* Subtle gold halo glow */}
+              <div className="absolute w-72 h-72 rounded-full bg-gold-600/10 filter blur-3xl pointer-events-none" />
 
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={currentSlide.id}
-                      initial={{ opacity: 0, scale: 0.94, y: 10 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 1.04, y: -10 }}
-                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                      className="w-full h-full flex flex-col items-center justify-center relative z-10"
-                    >
-                      <img
-                        src={currentSlide.image}
-                        alt={currentSlide.title}
-                        className="max-h-full max-w-full object-contain filter drop-shadow-xs"
-                      />
-                    </motion.div>
-                  </AnimatePresence>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSlide.id}
+                  initial={{ opacity: 0, scale: 0.94 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.05 }}
+                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative z-10 w-full max-w-sm sm:max-w-md aspect-square flex items-center justify-center p-4"
+                >
+                  <img
+                    src={currentSlide.image}
+                    alt={currentSlide.title}
+                    className="max-h-full max-w-full object-contain filter drop-shadow-[0_15px_35px_rgba(0,0,0,0.6)] animate-kenburns"
+                  />
+                </motion.div>
+              </AnimatePresence>
 
-                  {/* Floating Verified Badge with Breathing Motion */}
-                  <motion.div
-                    animate={{ y: [0, -6, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-xl shadow-xs border border-slate-200/80 flex items-center gap-2.5 z-20"
-                  >
-                    <img src={sacLogo} alt="SAC Logo" className="w-6 h-6 rounded-full" />
-                    <div className="text-left">
-                      <p className="text-[11px] font-bold text-slate-900 leading-none">{currentSlide.badge}</p>
-                      <p className="text-[10px] text-slate-500 mt-0.5">{currentSlide.spec}</p>
-                    </div>
-                  </motion.div>
-
-                  {/* Auto-cycle indicator pill */}
-                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-xs text-[10px] font-medium text-slate-500 px-2 py-0.5 rounded-md border border-slate-200/80 flex items-center gap-1.5 z-20">
-                    <span className="w-1.5 h-1.5 rounded-full bg-sac-600 animate-ping" />
-                    <span>0{currentSlideIndex + 1} / 0{HERO_SLIDES.length}</span>
-                  </div>
+              {/* Verified Seal Overlay */}
+              <div className="absolute bottom-6 left-6 flex items-center gap-3 bg-obsidian-900/80 backdrop-blur-md px-4 py-2 rounded-2xl border border-gold-600/30 shadow-lg z-20">
+                <img src={sacLogo} alt="SAC Official Emblem" className="w-7 h-7 rounded-full border border-gold-400" />
+                <div className="text-left">
+                  <p className="text-[11px] font-bold tracking-wider text-ivory-100 uppercase">{currentSlide.highlight}</p>
+                  <p className="text-[10px] text-gold-400 font-mono">{currentSlide.spec}</p>
                 </div>
-
-                {/* Slide Details */}
-                <div className="mt-4 px-1 text-left space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-sac-700">
-                      {currentSlide.tag}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-                      className="text-slate-400 hover:text-slate-700 p-1"
-                      title={isAutoPlaying ? "Pause slideshow" : "Resume slideshow"}
-                    >
-                      {isAutoPlaying ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-                    </button>
-                  </div>
-                  <h4 className="font-display font-bold text-sm sm:text-base text-slate-900">
-                    {currentSlide.title}
-                  </h4>
-                  <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
-                    {currentSlide.desc}
-                  </p>
-                </div>
-
-                {/* Interactive Thumbnail Selector Tabs */}
-                <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-                  {HERO_SLIDES.map((slide, idx) => {
-                    const isActive = idx === currentSlideIndex;
-                    return (
-                      <button
-                        key={slide.id}
-                        type="button"
-                        onClick={() => setCurrentSlideIndex(idx)}
-                        className={`flex-1 py-1.5 px-2 rounded-lg text-[10px] font-semibold text-center transition-all ${
-                          isActive
-                            ? 'bg-sac-800 text-white shadow-2xs'
-                            : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
-                        }`}
-                      >
-                        0{idx + 1}
-                      </button>
-                    );
-                  })}
-                </div>
-
               </div>
             </div>
-          </motion.div>
+
+            {/* Right Column: Editorial Narrative & Specifications */}
+            <div className="lg:col-span-5 flex flex-col justify-between p-8 sm:p-12 border-t lg:border-t-0 lg:border-l border-gold-600/20 text-left bg-obsidian-900/60 backdrop-blur-xs">
+              
+              <div className="space-y-6">
+                {/* Eyebrow & Category */}
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono tracking-widest text-gold-400 uppercase">
+                    CATALOG EXHIBIT {currentSlide.num} / 0{total}
+                  </span>
+                  <span className="text-xs uppercase tracking-luxe text-gold-500 font-semibold">
+                    {currentSlide.category}
+                  </span>
+                </div>
+
+                {/* Animated Slide Headline */}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentSlide.id + "-content"}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -15 }}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    className="space-y-3"
+                  >
+                    <h3 className="font-serif text-2xl sm:text-3xl text-ivory-100 leading-snug">
+                      {currentSlide.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-ivory-300 leading-relaxed font-light">
+                      {currentSlide.subtitle}
+                    </p>
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Action Buttons */}
+                <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={onEnquireClick}
+                    className="btn-luxe flex-1 text-center justify-center"
+                  >
+                    <span>Request Quotation</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={onExploreClick}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-gold-600/40 px-6 py-3 text-xs font-semibold tracking-wider uppercase text-ivory-100 hover:bg-gold-600 hover:text-obsidian-950 transition-all duration-300"
+                  >
+                    <FileText className="w-3.5 h-3.5 text-gold-400" />
+                    <span>View Catalog</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Bottom Navigation & Indicators bar like reference */}
+              <div className="pt-8 mt-6 border-t border-gold-600/20 flex items-center justify-between">
+                
+                {/* Slide Indicators */}
+                <div className="flex items-center gap-2" role="tablist">
+                  {HERO_SLIDES.map((slide, sIdx) => (
+                    <button
+                      key={slide.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={sIdx === index}
+                      onClick={() => goTo(sIdx)}
+                      className={`h-1.5 rounded-full transition-all duration-500 ${
+                        sIdx === index
+                          ? 'w-8 bg-gold-400 shadow-[0_0_12px_rgba(212,175,55,0.7)]'
+                          : 'w-2.5 bg-ivory-100/30 hover:bg-ivory-100/60'
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                {/* Controls */}
+                <div className="flex items-center gap-2">
+                  <span className="mr-2 text-xs font-mono tracking-widest text-gold-400/80 select-none">
+                    {currentSlide.num} / 0{total}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => goTo(index - 1)}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-gold-400/30 bg-obsidian-950/70 text-ivory-100 hover:border-gold-400 hover:bg-gold-500 hover:text-obsidian-950 transition-all"
+                    aria-label="Previous exhibit"
+                  >
+                    <ChevronLeft size={16} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => goTo(index + 1)}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-gold-400/30 bg-obsidian-950/70 text-ivory-100 hover:border-gold-400 hover:bg-gold-500 hover:text-obsidian-950 transition-all"
+                    aria-label="Next exhibit"
+                  >
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
 
         </motion.div>
+
       </div>
 
-      {/* Dynamic Infinite Scrolling Institutional Ticker */}
-      <div className="mt-12 sm:mt-16 py-3 bg-sac-900 border-y border-sac-800 overflow-hidden text-white relative">
-        <div className="flex select-none">
-          <motion.div
-            animate={{ x: [0, -1000] }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 25,
-                ease: "linear",
-              },
-            }}
-            className="flex items-center space-x-8 whitespace-nowrap text-xs font-semibold tracking-wider text-sac-200"
-          >
-            {[...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS].map((item, idx) => (
-              <span key={idx} className="flex items-center gap-8">
-                <span>{item}</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-sac-400 opacity-60" />
-              </span>
-            ))}
-          </motion.div>
+      {/* Continuous Smooth Left-to-Right Scrolling Ticker from reference website */}
+      <div className="mt-14 py-3.5 bg-obsidian-950 border-y border-gold-600/30 overflow-hidden text-ivory-100 select-none shadow-md">
+        <div className="animate-marquee-ltr text-xs font-medium tracking-luxe uppercase text-gold-400/90 flex items-center">
+          {[...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS].map((item, idx) => (
+            <span key={idx} className="flex items-center gap-8 mx-4">
+              <span>{item}</span>
+              <span className="text-gold-500 text-sm">✦</span>
+            </span>
+          ))}
         </div>
       </div>
+
     </section>
   );
 }

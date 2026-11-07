@@ -26,40 +26,40 @@ export default function ProductModal({ product, isOpen, onClose, isSelected, onT
           aria-modal="true"
           aria-labelledby="modal-title"
         >
-          {/* Backdrop */}
+          {/* Backdrop with luxury dark tint */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs"
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-obsidian-950/80 backdrop-blur-sm"
             onClick={onClose}
           />
 
           {/* Modal Container */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.94, y: 16 }}
+            initial={{ opacity: 0, scale: 0.94, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.94, y: 16 }}
-            transition={{ type: "spring", stiffness: 350, damping: 28 }}
-            className="relative w-full max-w-3xl bg-white rounded-2xl shadow-floating border border-slate-200 overflow-hidden my-8 text-left z-10"
+            exit={{ opacity: 0, scale: 0.94, y: 20 }}
+            transition={{ type: "spring", stiffness: 320, damping: 28 }}
+            className="relative w-full max-w-3xl bg-ivory-50 rounded-3xl shadow-floating border border-gold-600/30 overflow-hidden my-8 text-left z-10"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header bar */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/70">
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-sac-800">
-                <span className="w-2 h-2 rounded-full bg-sac-600"></span>
+            <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-gold-600/20 bg-ivory-200/50">
+              <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-luxe text-gold-800">
+                <span className="w-2 h-2 rounded-full bg-gold-600"></span>
                 <span>{product.brand} Official Catalog</span>
-                <span className="text-slate-300">•</span>
-                <span className="text-slate-500 font-mono">{product.brochureRef}</span>
+                <span className="text-gold-400">✦</span>
+                <span className="text-ink-600 font-mono text-[11px]">{product.brochureRef}</span>
               </div>
               <motion.button
                 whileHover={{ rotate: 90 }}
                 transition={{ duration: 0.2 }}
                 type="button"
                 onClick={onClose}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-sac-600"
-                aria-label="Close modal"
+                className="p-2 rounded-full text-ink-500 hover:text-ink-900 hover:bg-gold-500/10 transition-colors"
+                aria-label="Close dialog"
               >
                 <X className="w-5 h-5" />
               </motion.button>
@@ -70,75 +70,75 @@ export default function ProductModal({ product, isOpen, onClose, isSelected, onT
               
               {/* Image Showcase */}
               <div className="md:col-span-5 flex flex-col items-center">
-                <div className="w-full aspect-square bg-[#f8faf9] rounded-xl border border-slate-200/80 p-6 flex items-center justify-center relative overflow-hidden group">
+                <div className="w-full aspect-square bg-white rounded-2xl border border-gold-600/20 p-6 flex items-center justify-center relative overflow-hidden group shadow-xs">
                   <motion.img
                     whileHover={{ scale: 1.08 }}
                     transition={{ type: "spring", stiffness: 260, damping: 20 }}
                     src={product.image}
                     alt={product.name}
-                    className="max-h-full max-w-full object-contain filter drop-shadow-xs"
+                    className="max-h-full max-w-full object-contain filter drop-shadow-md"
                   />
-                  <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs text-[10px] font-bold text-sac-900 px-2 py-0.5 rounded border border-slate-200">
+                  <div className="absolute top-3 left-3 bg-obsidian-950/90 text-[10px] font-bold text-gold-400 px-2.5 py-1 rounded-full border border-gold-600/30 shadow-xs">
                     {product.highlight}
                   </div>
                 </div>
-                <p className="mt-2 text-[11px] text-slate-400 text-center">
-                  Cropped directly from Saurabh Agro Chemicals brochure
+                <p className="mt-3 text-[11px] text-ink-500 text-center font-light">
+                  Exact catalog photograph from Saurabh Agro Chemicals brochure
                 </p>
               </div>
 
               {/* Details & Specs */}
               <div className="md:col-span-7 space-y-5">
                 <div>
-                  <div className="inline-block px-2.5 py-0.5 rounded-full bg-sac-50 text-sac-800 border border-sac-200/80 text-xs font-medium mb-2">
+                  <span className="inline-block px-3 py-1 rounded-full bg-gold-500/10 text-gold-800 border border-gold-600/30 text-[11px] font-semibold tracking-wider uppercase mb-2">
                     {product.material}
-                  </div>
-                  <h3 id="modal-title" className="font-display font-bold text-xl sm:text-2xl text-slate-900 leading-snug">
+                  </span>
+                  <h3 id="modal-title" className="font-serif text-2xl sm:text-3xl text-ink-900 leading-snug">
                     {product.name}
                   </h3>
                 </div>
 
-                <p className="text-sm text-slate-600 leading-relaxed font-normal">
+                <p className="text-xs sm:text-sm text-ink-600 leading-relaxed font-light">
                   {product.features}
                 </p>
 
-                {/* Specifications List */}
-                <div className="pt-2 border-t border-slate-100">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+                {/* Technical Specifications */}
+                <div className="pt-3 border-t border-gold-600/20">
+                  <h4 className="text-[11px] font-bold uppercase tracking-luxe text-gold-700 mb-3">
                     Brochure Technical Specifications
                   </h4>
-                  <dl className="grid grid-cols-1 gap-2.5 text-xs">
+                  <dl className="grid grid-cols-1 gap-2 text-xs">
                     {product.specs.map((s, idx) => (
-                      <div key={idx} className="flex flex-col sm:flex-row sm:justify-between py-1 border-b border-slate-50">
-                        <dt className="text-slate-500 font-medium">{s.label}</dt>
-                        <dd className="text-slate-900 font-semibold sm:text-right mt-0.5 sm:mt-0">{s.value}</dd>
+                      <div key={idx} className="flex flex-col sm:flex-row sm:justify-between py-1.5 border-b border-ivory-200">
+                        <dt className="text-ink-500 font-normal">{s.label}</dt>
+                        <dd className="text-ink-900 font-semibold sm:text-right mt-0.5 sm:mt-0">{s.value}</dd>
                       </div>
                     ))}
                   </dl>
                 </div>
 
-                {/* Modal Actions */}
+                {/* Actions */}
                 <div className="pt-4 flex flex-col sm:flex-row items-center gap-3">
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     type="button"
                     onClick={() => onToggleSelect(product)}
-                    className={`w-full sm:flex-1 py-2.5 px-4 rounded-lg font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all ${
+                    className={`w-full sm:flex-1 py-3 px-5 rounded-full font-semibold text-xs tracking-wider uppercase flex items-center justify-center gap-2 transition-all ${
                       isSelected
-                        ? 'bg-sac-100 text-sac-900 border border-sac-300 hover:bg-sac-200'
-                        : 'bg-sac-800 text-white hover:bg-sac-900 shadow-xs'
+                        ? 'bg-gold-500/20 text-gold-900 border border-gold-600 hover:bg-gold-500/30'
+                        : 'bg-obsidian-950 text-ivory-100 hover:bg-gold-600 hover:text-obsidian-950 shadow-md'
                     }`}
                   >
                     {isSelected ? (
                       <>
-                        <Check className="w-4 h-4 text-sac-800" />
-                        <span>Included in Enquiry List</span>
+                        <Check className="w-4 h-4 text-gold-800" />
+                        <span>Included in Enquiry Dossier</span>
                       </>
                     ) : (
                       <>
                         <Plus className="w-4 h-4" />
-                        <span>Add to Institutional Quote</span>
+                        <span>Add to Quotation Dossier</span>
                       </>
                     )}
                   </motion.button>
@@ -148,9 +148,9 @@ export default function ProductModal({ product, isOpen, onClose, isSelected, onT
                     whileTap={{ scale: 0.98 }}
                     type="button"
                     onClick={onClose}
-                    className="w-full sm:w-auto py-2.5 px-4 rounded-lg border border-slate-300 text-slate-700 font-medium text-xs sm:text-sm hover:bg-slate-50"
+                    className="w-full sm:w-auto py-3 px-6 rounded-full border border-ink-900/20 text-ink-700 text-xs font-semibold uppercase tracking-wider hover:bg-ivory-200"
                   >
-                    Back to Catalog
+                    Close
                   </motion.button>
                 </div>
 

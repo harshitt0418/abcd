@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { COMPANY_INFO } from '../data/company';
-import { Building2, Compass, Target, ArrowRight, ShieldCheck, Factory, Users, CheckCircle } from 'lucide-react';
+import { Building2, Compass, Target, ArrowRight, ShieldCheck, Factory, Users, Award, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import sacLogo from '../assets/sac_logo_circle.png';
 
@@ -31,26 +31,26 @@ export default function AboutSection() {
   const [activeMilestone, setActiveMilestone] = useState(0);
 
   return (
-    <section id="about" className="py-20 md:py-28 bg-[#f8faf9] border-b border-slate-200/80 overflow-hidden">
+    <section id="about" className="py-24 sm:py-32 bg-ivory-100 border-b border-gold-600/20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-3xl mb-16 text-left"
         >
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-sac-800 mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-sac-700"></span>
-            <span>Corporate Background & Leadership</span>
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-luxe text-gold-700 mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-gold-600"></span>
+            <span>Executive Profile & Heritage</span>
           </div>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-tight">
-            Four decades of precision manufacturing and nationwide supply.
+          <h2 className="font-serif text-3xl sm:text-5xl text-ink-900 tracking-tight leading-tight">
+            Four decades of precision metallurgy and nationwide supply.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
-            Under the leadership of Managing Director <strong>{COMPANY_INFO.managingDirector}</strong>, Saurabh Agro Chemicals has grown since 1984 into a trusted manufacturing partner for Indian Railways, state utility boards, and municipal corporations.
+          <p className="mt-4 text-base sm:text-lg text-ink-600 leading-relaxed font-light">
+            Under the executive direction of Managing Director <strong>{COMPANY_INFO.managingDirector}</strong>, Saurabh Agro Chemicals has operated since 1984 as an established manufacturing and supply partner for Indian Railways, state utility ministries, and municipal corporations nationwide.
           </p>
         </motion.div>
 
@@ -59,39 +59,47 @@ export default function AboutSection() {
           
           {/* Left Column: Narrative & Group Synergy */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.55 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-7 space-y-8"
           >
-            <div className="prose prose-slate max-w-none text-slate-600 text-sm sm:text-base leading-relaxed space-y-4 font-normal">
-              <p>
-                Headquartered in Gorakhpur (Uttar Pradesh) with a dedicated manufacturing unit in Delhi, the company combines precision metal fabrication with agricultural chemical formulation. Over more than 40 years, our focus has remained steadfast: manufacturing durable, compliant sanitation and safety assets that withstand heavy public usage.
+            {/* Executive Quote Callout */}
+            <div className="p-8 rounded-3xl bg-white border border-gold-600/30 shadow-xs relative">
+              <span className="text-4xl font-serif text-gold-600/40 absolute top-4 left-6">“</span>
+              <p className="font-serif italic text-lg sm:text-xl text-ink-900 leading-relaxed pl-6 pt-2 font-normal">
+                Over four decades, our mandate has been unequivocal: delivering uncompromised metallurgical precision and certified chemical formulations that withstand continuous public utility deployment.
               </p>
-              <p>
-                Our Delhi manufacturing plant is equipped with modern press tooling, shearing machinery, and welding infrastructure, enabling bulk supply capacity and strict quality-control adherence across every production run.
-              </p>
+              <div className="mt-6 pt-4 border-t border-ivory-200 flex items-center justify-between">
+                <div>
+                  <p className="font-serif font-bold text-sm text-ink-900">{COMPANY_INFO.managingDirector}</p>
+                  <p className="text-[10px] font-mono tracking-wider text-gold-700 uppercase">Managing Director • Saurabh Agro Chemicals</p>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-mono text-ink-400">
+                  <span>ESTD 1984</span>
+                </div>
+              </div>
             </div>
 
-            {/* Interactive Milestones Progression */}
-            <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-sac-800 mb-4 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-sac-600" />
-                <span>Four Decades of Evolution (1984 – Present)</span>
+            {/* Interactive Timeline Progression */}
+            <div className="p-7 rounded-3xl bg-white border border-gold-600/20 shadow-xs">
+              <h4 className="text-[11px] font-bold uppercase tracking-luxe text-gold-700 mb-5 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-gold-600" />
+                <span>Institutional Milestones (1984 – Present)</span>
               </h4>
 
-              {/* Year Buttons */}
-              <div className="grid grid-cols-4 gap-2 mb-4">
+              {/* Year Selector Tabs */}
+              <div className="grid grid-cols-4 gap-2 mb-5">
                 {MILESTONES.map((m, idx) => (
                   <button
                     key={m.year}
                     type="button"
                     onClick={() => setActiveMilestone(idx)}
-                    className={`py-2 px-1 text-center rounded-xl text-xs font-bold transition-all ${
+                    className={`py-2.5 px-2 text-center rounded-full text-xs font-semibold tracking-wider uppercase transition-all ${
                       activeMilestone === idx
-                        ? 'bg-sac-800 text-white shadow-2xs'
-                        : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
+                        ? 'bg-obsidian-950 text-ivory-100 shadow-sm border border-gold-600/50'
+                        : 'bg-ivory-100 text-ink-700 hover:bg-ivory-200'
                     }`}
                   >
                     {m.year}
@@ -99,20 +107,20 @@ export default function AboutSection() {
                 ))}
               </div>
 
-              {/* Milestone Details Card with AnimatePresence */}
+              {/* Active Milestone Card */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeMilestone}
-                  initial={{ opacity: 0, y: 8 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.25 }}
-                  className="p-4 rounded-xl bg-sac-50/60 border border-sac-100 text-left"
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="p-5 rounded-2xl bg-ivory-200/50 border border-gold-600/20 text-left"
                 >
-                  <p className="font-display font-bold text-sm text-slate-900">
+                  <p className="font-serif font-medium text-base text-ink-900">
                     {MILESTONES[activeMilestone].title}
                   </p>
-                  <p className="mt-1 text-xs text-slate-600 leading-relaxed font-normal">
+                  <p className="mt-1.5 text-xs sm:text-sm text-ink-600 leading-relaxed font-light">
                     {MILESTONES[activeMilestone].description}
                   </p>
                 </motion.div>
@@ -120,13 +128,13 @@ export default function AboutSection() {
             </div>
 
             {/* Sister Concerns Box */}
-            <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
-              <div className="flex items-center gap-2.5 mb-4 text-xs font-bold uppercase tracking-wider text-sac-800">
-                <Users className="w-4 h-4 text-sac-700" />
-                <span>Our Group Concerns</span>
+            <div className="p-7 rounded-3xl bg-white border border-gold-600/20 shadow-xs">
+              <div className="flex items-center gap-2.5 mb-4 text-[11px] font-bold uppercase tracking-luxe text-gold-700">
+                <Users className="w-4 h-4 text-gold-600" />
+                <span>Group Operating Synergy</span>
               </div>
-              <p className="text-xs sm:text-sm text-slate-600 mb-4 leading-relaxed font-normal">
-                Saurabh Agro Chemicals operates in active operational synergy with its two established sister concerns:
+              <p className="text-xs sm:text-sm text-ink-600 mb-5 leading-relaxed font-light">
+                Saurabh Agro Chemicals operates in active commercial and distribution synergy with two long-established group concerns:
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -134,11 +142,11 @@ export default function AboutSection() {
                   <motion.div
                     whileHover={{ y: -3 }}
                     key={sc.name}
-                    className="p-4 rounded-xl bg-slate-50 border border-slate-200/60 transition-transform"
+                    className="p-5 rounded-2xl bg-ivory-50 border border-gold-600/20"
                   >
-                    <p className="font-semibold text-xs sm:text-sm text-slate-900">{sc.name}</p>
-                    <p className="text-xs text-sac-700 font-medium mt-0.5">{sc.location}</p>
-                    <p className="text-[11px] text-slate-500 mt-1">{sc.scope}</p>
+                    <p className="font-serif font-medium text-sm text-ink-900">{sc.name}</p>
+                    <p className="text-xs text-gold-700 font-medium mt-0.5">{sc.location}</p>
+                    <p className="text-[11px] text-ink-500 mt-1.5 font-light">{sc.scope}</p>
                   </motion.div>
                 ))}
               </div>
@@ -147,68 +155,68 @@ export default function AboutSection() {
             {/* Corporate Hubs */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               {COMPANY_INFO.locations.map((loc) => (
-                <div key={loc.city} className="p-4 rounded-xl bg-white border border-slate-200/80">
-                  <div className="flex items-center gap-2 text-xs font-bold text-slate-900 mb-1">
-                    <Building2 className="w-3.5 h-3.5 text-sac-700" />
+                <div key={loc.city} className="p-5 rounded-2xl bg-white border border-gold-600/20">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink-900 mb-1.5">
+                    <Building2 className="w-4 h-4 text-gold-600" />
                     <span>{loc.city} ({loc.state})</span>
                   </div>
-                  <p className="text-xs text-slate-500 font-mono leading-tight">{loc.address}</p>
-                  <p className="text-[11px] text-sac-700 font-medium mt-2">{loc.role}</p>
+                  <p className="text-xs text-ink-600 font-mono leading-relaxed">{loc.address}</p>
+                  <p className="text-[11px] text-gold-800 font-medium mt-2">{loc.role}</p>
                 </div>
               ))}
             </div>
 
           </motion.div>
 
-          {/* Right Column: Vision & Mission Cards */}
+          {/* Right Column: Vision, Mission & Quality Guarantee */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.55 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-5 space-y-6"
           >
             {/* Vision Card */}
             <motion.div
-              whileHover={{ y: -4 }}
-              className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200/90 shadow-2xs relative overflow-hidden transition-all"
+              whileHover={{ y: -5 }}
+              className="p-7 sm:p-8 rounded-3xl bg-white border border-gold-600/20 shadow-xs relative overflow-hidden transition-all"
             >
-              <div className="w-10 h-10 rounded-xl bg-sac-50 border border-sac-200 flex items-center justify-center text-sac-800 mb-4">
-                <Compass className="w-5 h-5 text-sac-700" />
+              <div className="w-11 h-11 rounded-2xl bg-gold-500/10 border border-gold-600/30 flex items-center justify-center text-gold-700 mb-5">
+                <Compass className="w-5 h-5 text-gold-600" />
               </div>
-              <h3 className="font-display font-bold text-lg text-slate-900 mb-2">
-                Our Vision
+              <h3 className="font-serif text-xl sm:text-2xl text-ink-900 mb-2 font-medium">
+                Our Corporate Vision
               </h3>
-              <p className="text-sm text-slate-600 leading-relaxed font-normal">
+              <p className="text-xs sm:text-sm text-ink-600 leading-relaxed font-light">
                 "{COMPANY_INFO.vision}"
               </p>
             </motion.div>
 
             {/* Mission Card */}
             <motion.div
-              whileHover={{ y: -4 }}
-              className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200/90 shadow-2xs relative overflow-hidden transition-all"
+              whileHover={{ y: -5 }}
+              className="p-7 sm:p-8 rounded-3xl bg-white border border-gold-600/20 shadow-xs relative overflow-hidden transition-all"
             >
-              <div className="w-10 h-10 rounded-xl bg-sac-50 border border-sac-200 flex items-center justify-center text-sac-800 mb-4">
-                <Target className="w-5 h-5 text-sac-700" />
+              <div className="w-11 h-11 rounded-2xl bg-gold-500/10 border border-gold-600/30 flex items-center justify-center text-gold-700 mb-5">
+                <Target className="w-5 h-5 text-gold-600" />
               </div>
-              <h3 className="font-display font-bold text-lg text-slate-900 mb-2">
+              <h3 className="font-serif text-xl sm:text-2xl text-ink-900 mb-2 font-medium">
                 Our Mission
               </h3>
-              <p className="text-sm text-slate-600 leading-relaxed font-normal">
+              <p className="text-xs sm:text-sm text-ink-600 leading-relaxed font-light">
                 "{COMPANY_INFO.mission}"
               </p>
             </motion.div>
 
-            {/* Quality Standard Note with animated subtle border */}
-            <div className="p-5 rounded-2xl bg-sac-900 text-white flex items-start gap-3.5 shadow-subtle">
-              <img src={sacLogo} alt="SAC Seal" className="w-8 h-8 rounded-full flex-shrink-0 mt-0.5" />
+            {/* Quality Standard Note in Obsidian & Gold */}
+            <div className="p-7 rounded-3xl bg-obsidian-950 text-ivory-100 flex items-start gap-4 shadow-luxe border border-gold-600/30">
+              <img src={sacLogo} alt="SAC Seal" className="w-10 h-10 rounded-full flex-shrink-0 mt-0.5 border border-gold-500/50" />
               <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-sac-200">
-                  Strict Quality Control Standards
+                <p className="text-xs font-bold uppercase tracking-luxe text-gold-400">
+                  Strict Metallurgical & Chemical Controls
                 </p>
-                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-                  We adhere to strict quality control standards to maintain consistency across stainless steel grades, polymer thickness, and active agro-chemical percentages.
+                <p className="text-xs text-ivory-300 mt-2 leading-relaxed font-light">
+                  All stainless steel fabrications undergo rigorous 304-grade spectro-analysis; polymer molding strictly uses UV-stabilized virgin polymers, and vector control insecticides comply with designated active percentages.
                 </p>
               </div>
             </div>

@@ -5,63 +5,64 @@ import { motion } from 'framer-motion';
 
 export default function InstitutionalStrengths() {
   const iconMap = [Award, ShieldCheck, Factory, FileCheck, Truck, RefreshCw];
+  const romanNumerals = ["I", "II", "III", "IV", "V", "VI"];
 
   return (
-    <section id="capabilities" className="py-20 md:py-28 bg-white border-b border-slate-200/80 overflow-hidden">
+    <section id="capabilities" className="py-24 sm:py-32 bg-ivory-200/40 border-b border-gold-600/20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
         
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-3xl mb-16"
         >
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-sac-800 mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-sac-700"></span>
-            <span>Brochure Verified Competencies</span>
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-luxe text-gold-700 mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-gold-600"></span>
+            <span>Tender Execution & Manufacturing Standards</span>
           </div>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-tight">
-            Institutional Supply & Tender Capabilities
+          <h2 className="font-serif text-3xl sm:text-5xl text-ink-900 tracking-tight leading-tight">
+            Institutional Capabilities
           </h2>
-          <p className="mt-3 text-base text-slate-600 leading-relaxed font-normal">
-            Equipped to satisfy stringent public sector procurement guidelines, bulk quantity schedules, and multi-location deliveries across Indian Railways and municipal bodies.
+          <p className="mt-4 text-sm sm:text-base text-ink-600 leading-relaxed font-light">
+            Engineered to fulfill demanding public sector tender mandates, multi-ton bulk delivery commitments, and stringent RDSO/BIS compliance protocols across Indian Railways and municipal corporations.
           </p>
         </motion.div>
 
-        {/* Strengths Grid with Staggered Scroll Entrance */}
+        {/* Strengths Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {COMPANY_INFO.strengths.map((st, idx) => {
             const Icon = iconMap[idx % iconMap.length];
             return (
               <motion.div
                 key={st.title}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.45, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ y: -6, borderColor: '#94a3b8' }}
-                className="p-6 sm:p-7 rounded-2xl bg-[#fafbfb] border border-slate-200/80 transition-all duration-300 shadow-2xs hover:shadow-subtle flex flex-col justify-between"
+                transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -8 }}
+                className="p-8 rounded-3xl bg-white border border-gold-600/20 transition-all duration-300 shadow-xs hover:shadow-luxe hover:border-gold-600/50 flex flex-col justify-between"
               >
                 <div>
                   <motion.div
                     whileHover={{ scale: 1.1, rotate: 6 }}
-                    className="w-10 h-10 rounded-xl bg-sac-100/70 border border-sac-200 flex items-center justify-center text-sac-800 mb-5 origin-center"
+                    className="w-12 h-12 rounded-2xl bg-gold-500/10 border border-gold-600/30 flex items-center justify-center text-gold-700 mb-6 origin-center"
                   >
-                    <Icon className="w-5 h-5 text-sac-700" />
+                    <Icon className="w-6 h-6 text-gold-600" />
                   </motion.div>
-                  <h3 className="font-display font-bold text-base sm:text-lg text-slate-900 mb-2.5">
+                  <h3 className="font-serif text-lg sm:text-xl text-ink-900 mb-3 font-medium">
                     {st.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                  <p className="text-xs sm:text-sm text-ink-600 leading-relaxed font-light">
                     {st.description}
                   </p>
                 </div>
 
-                <div className="pt-4 mt-6 border-t border-slate-200/60 flex items-center justify-between text-[11px] text-slate-400 font-mono">
-                  <span>CAPABILITY 0{idx + 1}</span>
-                  <span className="text-sac-700 font-sans font-semibold">Verified</span>
+                <div className="pt-6 mt-6 border-t border-ivory-200 flex items-center justify-between text-[11px] font-mono text-ink-400">
+                  <span className="text-gold-700 tracking-wider">PILLAR {romanNumerals[idx]}</span>
+                  <span className="text-ink-600 font-sans font-semibold uppercase tracking-wider text-[10px]">Verified Standard</span>
                 </div>
               </motion.div>
             );

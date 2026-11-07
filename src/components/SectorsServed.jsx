@@ -35,31 +35,31 @@ export default function SectorsServed() {
   ];
 
   return (
-    <section id="sectors" className="py-20 md:py-28 bg-[#f8faf9] border-b border-slate-200/80 overflow-hidden">
+    <section id="sectors" className="py-24 sm:py-32 bg-ivory-100 border-b border-gold-600/20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
         
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5 }}
-          className="max-w-3xl mb-14"
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-3xl mb-16"
         >
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-sac-800 mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-sac-700"></span>
-            <span>Documented Public Sector Distribution</span>
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-luxe text-gold-700 mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-gold-600"></span>
+            <span>Documented Institutional Clientele</span>
           </div>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-5xl text-ink-900 tracking-tight leading-tight">
             Key Sectors & Organizations Served
           </h2>
-          <p className="mt-3 text-base text-slate-600 leading-relaxed font-normal">
-            As documented in our official brochure, Saurabh Agro Chemicals provides bulk supplies and tender fulfillment across these primary public utilities and government bodies. Click any sector to view specific deployed products.
+          <p className="mt-4 text-sm sm:text-base text-ink-600 leading-relaxed font-light">
+            As documented in our corporate brochure index, Saurabh Agro Chemicals executes direct institutional tenders and contract manufacturing for premier national infrastructure authorities.
           </p>
         </motion.div>
 
-        {/* Sectors Grid with Interactive Click & Motion Hover */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Sectors Grid with Luxury Elevation and Gold Borders */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {COMPANY_INFO.clientele.map((client, idx) => {
             const Icon = iconList[idx % iconList.length];
             const isSelected = selectedSectorIndex === idx;
@@ -67,38 +67,38 @@ export default function SectorsServed() {
             return (
               <motion.div
                 key={client.name}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.45, delay: idx * 0.08 }}
-                whileHover={{ y: -5 }}
+                transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -6 }}
                 onClick={() => setSelectedSectorIndex(idx)}
-                className={`p-6 rounded-2xl cursor-pointer border transition-all duration-300 flex flex-col justify-between text-left ${
+                className={`p-7 rounded-3xl cursor-pointer border transition-all duration-300 flex flex-col justify-between text-left ${
                   isSelected
-                    ? 'bg-white border-sac-600 shadow-premium ring-2 ring-sac-600/20'
-                    : 'bg-white border-slate-200/90 shadow-2xs hover:shadow-subtle hover:border-slate-300'
+                    ? 'bg-white border-gold-600 shadow-luxe ring-1 ring-gold-600'
+                    : 'bg-white border-gold-600/20 shadow-xs hover:border-gold-600/40 hover:shadow-md'
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-sac-700 bg-sac-50 px-2.5 py-1 rounded-md border border-sac-100">
+                    <span className="text-[10px] font-bold uppercase tracking-luxe text-gold-700 bg-gold-500/10 px-3 py-1 rounded-full border border-gold-600/20">
                       {client.category}
                     </span>
-                    <Icon className={`w-4 h-4 transition-colors ${isSelected ? 'text-sac-700' : 'text-slate-400'}`} />
+                    <Icon className={`w-4 h-4 transition-colors ${isSelected ? 'text-gold-700' : 'text-ink-400'}`} />
                   </div>
-                  <h3 className="font-display font-bold text-lg text-slate-900 mb-2">
+                  <h3 className="font-serif text-xl text-ink-900 mb-2 font-medium">
                     {client.name}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">
+                  <p className="text-xs sm:text-sm text-ink-600 leading-relaxed font-light">
                     {client.highlight}
                   </p>
                 </div>
 
-                <div className="pt-4 mt-6 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                  <span className="text-slate-400">Brochure Clientele</span>
+                <div className="pt-5 mt-6 border-t border-ivory-200 flex items-center justify-between text-[11px]">
+                  <span className="text-ink-400 font-mono text-[10px]">CITED IN BROCHURE</span>
                   {isSelected && (
-                    <span className="text-sac-700 font-semibold flex items-center gap-1">
-                      <CheckCircle className="w-3 h-3" /> Selected Scope
+                    <span className="text-gold-700 font-bold flex items-center gap-1 uppercase tracking-wider text-[10px]">
+                      <CheckCircle className="w-3 h-3 text-gold-600" /> Active Scope
                     </span>
                   )}
                 </div>
@@ -107,27 +107,27 @@ export default function SectorsServed() {
           })}
         </div>
 
-        {/* Dynamic Sector Supplied Scope Detail Box */}
+        {/* Dynamic Sector Scope Detail Box in Obsidian & Gold */}
         <AnimatePresence mode="wait">
           <motion.div
             key={selectedSectorIndex}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3 }}
-            className="mt-8 p-6 rounded-2xl bg-sac-900 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-subtle text-left"
+            className="mt-10 p-7 sm:p-8 rounded-3xl bg-obsidian-950 text-ivory-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-luxe border border-gold-600/30 text-left"
           >
             <div>
-              <span className="text-xs font-semibold text-sac-300 uppercase tracking-wider">
-                Documented Scope for {COMPANY_INFO.clientele[selectedSectorIndex].name}
+              <span className="text-xs font-semibold text-gold-400 uppercase tracking-luxe block mb-1">
+                Verified Scope of Supply: {COMPANY_INFO.clientele[selectedSectorIndex].name}
               </span>
-              <p className="mt-1 text-sm text-slate-200 font-medium">
+              <p className="text-sm sm:text-base text-ivory-200 font-serif font-light leading-relaxed">
                 {sectorDetails[selectedSectorIndex].products}
               </p>
             </div>
             <a
               href="#products"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-sac-800 hover:bg-sac-700 text-white text-xs font-semibold whitespace-nowrap border border-sac-700 transition-colors"
+              className="inline-flex items-center gap-2 rounded-full px-6 py-3 bg-gold-500 text-obsidian-950 text-xs font-bold uppercase tracking-wider hover:bg-gold-400 transition-all shadow-md whitespace-nowrap"
             >
               <span>Explore Matching Products</span>
             </a>
@@ -135,9 +135,9 @@ export default function SectorsServed() {
         </AnimatePresence>
 
         {/* Verification Note */}
-        <div className="mt-8 p-4 rounded-xl bg-slate-100/80 border border-slate-200/80 text-xs text-slate-500 text-left">
+        <div className="mt-8 p-5 rounded-2xl bg-white border border-gold-600/20 text-xs text-ink-600 text-left font-light">
           <p>
-            <strong className="text-slate-700">Notice of Authenticity:</strong> All organizations and departments listed above are cited directly from the Saurabh Agro Chemicals corporate brochure index (Page 3). Product supply occurs through designated government tender handling and authorized procurement channels.
+            <strong className="text-ink-900 font-semibold">Institutional Authenticity:</strong> All organizations listed above are cited directly from the Saurabh Agro Chemicals corporate brochure (Page 3). Deliveries occur strictly through designated government tender handling, GeM portal procurement, and authorized rate contract schedules.
           </p>
         </div>
 
